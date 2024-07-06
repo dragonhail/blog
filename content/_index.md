@@ -5,18 +5,28 @@ toc: false
 layout: wide
 ---
 
-<div class="hx-mt-4"></div>
-
-<p class="hx-mb-12 hx-text-center hx-text-lg hx-text-gray-500 dark:hx-text-gray-400">
-</p>
-
 {{< cards >}}
 
   {{< card
         link="https://github.com/dragonhail/dart_pipeline"
         title="Data Pipeline with OpenDart API"
-        image="https://github.com/dragonhail/dart_pipeline/blob/main/img.png"
+        image="https://raw.githubusercontent.com/dragonhail/dart_pipeline/main/img.png"
         imageStyle="object-fit:cover; aspect-ratio:16/9;"
   >}}
+
+    {{< card
+        link="https://github.com/dragonhail/capstone_design"
+        title="Capstone Design: Contact-less button"
+        image=""
+        imageStyle="object-fit:cover; aspect-ratio:16/9;"
+  >}}
+
+    {{< card
+        link="https://github.com/dragonhail/capstone_design"
+        title="Capstone Design: Real time frequency analysis and distance inference"
+        image=""
+        imageStyle="object-fit:cover; aspect-ratio:16/9;"
+  >}}
+
 
 {{< /cards >}}

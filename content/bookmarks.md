@@ -7,7 +7,6 @@ title: Bookmarks
      DO NOT EDIT! -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 <TITLE>Bookmarks</TITLE>
-<H1>Bookmarks</H1>
 <DL><p>
     <DT><H3 ADD_DATE="1685040250" LAST_MODIFIED="1720244851" PERSONAL_TOOLBAR_FOLDER="true">즐겨찾기 모음</H3>
     <DL><p>
