@@ -17,8 +17,8 @@ markup:
 
 menu:
   main:
-    - name: Docs
-      pageRef: /docs
+    - name: projects
+      pageRef: /projects
       weight: 1
     - name: Links
       pageRef: /links
