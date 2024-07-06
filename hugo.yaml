@@ -20,12 +20,12 @@ menu:
     - name: projects
       pageRef: /projects
       weight: 1
-    - name: Links
-      pageRef: /links
+    - name: Bookmarks
+      pageRef: /bookmarks
       weight: 2
     - name: CV
       weight: 3
-      url: ""
+      url: "https://drive.google.com/file/d/15GsyYVMS3-_fOBAgodLgwsiqu9N0XxuT/view?usp=drive_link"
     - name: Search
       weight: 4
       params:
