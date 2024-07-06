@@ -19,10 +19,8 @@ markup:
 menu:
   main:
     - name: Bookmarks
-      pageRef: /bookmarks.md
+      pageRef: /bookmarks
       weight: 1
-      params:
-        icon: bookmark
     - name: CV
       weight: 2
       url: "https://drive.google.com/file/d/15GsyYVMS3-_fOBAgodLgwsiqu9N0XxuT/view?usp=drive_link"
@@ -41,7 +39,7 @@ menu:
 params:
   navbar:
     displayTitle: true
-    displayLogo: false
+    displayLogo: true
 
   footer:
     displayCopyright: false
