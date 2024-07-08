@@ -19,16 +19,14 @@ markup:
 menu:
   main:
     - name: resume
-      weight: 1
-      url: "https://drive.google.com/file/d/15GsyYVMS3-_fOBAgodLgwsiqu9N0XxuT/view?usp=drive_link"
-      params:
-        icon:
-    - name: Search
       weight: 2
+      url: "https://drive.google.com/file/d/15GsyYVMS3-_fOBAgodLgwsiqu9N0XxuT/view?usp=drive_link"
+    - name: Search
+      weight: 3
       params:
         type: search
     - name: GitHub
-      weight: 3
+      weight: 4
       url: "https://github.com/dragonhail/"
       params:
         icon: github
