@@ -1,6 +1,6 @@
 ---
 title: TSCH
-toc: false
+toc: true
 breadcrumbs: false
 weight: 6
 ---

@@ -1,12 +1,9 @@
 ---
 title: 카프카
-toc: false
+toc: true
 breadcrumbs: false
 weight: 1
 ---
-
-{{< callout type="info" >}}파티션{{< /callout >}}
-
-{{< callout type="info" >}}listener{{< /callout >}}
-
-{{< callout type="info" >}}advertised listener{{< /callout >}}
+## 파티션?
+## LISTENER?
+## advertised_listener?

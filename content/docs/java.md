@@ -1,9 +1,9 @@
 ---
 title: JAVA
-toc: false
+toc: true
 breadcrumbs: false
 weight: 3
 ---
-{{< callout type="info" >}}인터페이스?{{< /callout >}}
+## 인터페이스?
 
-{{< callout type="info" >}}abstract class{{< /callout >}}
+## abstract class?

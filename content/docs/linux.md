@@ -1,6 +1,6 @@
 ---
 title: Linux
-toc: false
+toc: true
 breadcrumbs: false
 weight: 4
 ---

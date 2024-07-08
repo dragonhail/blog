@@ -1,8 +1,8 @@
 ---
 title: OS
-toc: false
+toc: true
 breadcrumbs: false
 weight: 5
 ---
-{{< callout type="info" >}}시스템 콜{{< /callout >}}
-{{< callout type="info" >}}interrupt{{< /callout >}}
+## 시스템 콜?
+## 인터럽트?

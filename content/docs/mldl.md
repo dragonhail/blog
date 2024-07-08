@@ -1,9 +1,10 @@
 ---
 title: ML & DL
-toc: false
+toc: true
 breadcrumbs: false
 weight: 2
 ---
-{{< callout type="info" >}}RNN{{< /callout >}}
-{{< callout type="info" >}}attention model{{< /callout >}}
-{{< callout type="info" >}}LSTM{{< /callout >}}
+## RNN?
+## attention module?
+## LSTM?
+## self-attention?
