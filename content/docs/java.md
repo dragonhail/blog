@@ -2,8 +2,7 @@
 title: JAVA
 toc: false
 breadcrumbs: false
-prev: /docs/kafka
-next: /docs/mldl
+weight: 3
 ---
 {{< callout type="info" >}}인터페이스?{{< /callout >}}
 

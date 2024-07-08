@@ -2,9 +2,7 @@
 title: 카프카
 toc: false
 breadcrumbs: false
-prev: /docs
-next: /docs/java
-
+weight: 1
 ---
 
 {{< callout type="info" >}}파티션{{< /callout >}}

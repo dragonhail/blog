@@ -2,5 +2,5 @@
 title: Linux
 toc: false
 breadcrumbs: false
-prev: docs/v2x
+weight: 4
 ---
