@@ -25,7 +25,7 @@ menu:
       pageRef: /docs/papers
       weight: 2
     - name: Leetcode
-      pageRef: docs/leetcode
+      pageRef: /docs/leetcode
       weight: 3
     - name: CV
       weight: 4

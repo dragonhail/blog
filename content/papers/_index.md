@@ -1,5 +1,7 @@
 ---
 title: 흥미로운 논문 모음
+cascade:
+  type: docs
 ---
 
 ## TSCH
