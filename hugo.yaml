@@ -21,17 +21,23 @@ menu:
     - name: Bookmarks
       pageRef: /bookmarks
       weight: 1
-    - name: CV
+    - name: Papers
+      pageRef: /docs/papers
       weight: 2
+    - name: Leetcode
+      pageRef: docs/leetcode
+      weight: 3
+    - name: CV
+      weight: 4
       url: "https://drive.google.com/file/d/15GsyYVMS3-_fOBAgodLgwsiqu9N0XxuT/view?usp=drive_link"
       params:
         icon: 
     - name: Search
-      weight: 3
+      weight: 5
       params:
         type: search
     - name: GitHub
-      weight: 4
+      weight: 6
       url: "https://github.com/dragonhail/"
       params:
         icon: github
