@@ -1,9 +1,8 @@
 ---
+title: NOTES
 toc: false
 breadcrumbs: false
 ---
-
-## NOTES
 
 {{< cards >}}
 
@@ -21,6 +20,28 @@ breadcrumbs: false
         link="https://dragonhail.github.io/blog/docs/mldl.md"
         title="ML & DL"
   >}}
+
+      {{< card
+        link="https://dragonhail.github.io/blog/docs/linux.md"
+        title="리눅스"
+  >}}
+
+    {{< card
+        link="https://dragonhail.github.io/blog/docs/os.md"
+        title="OS"
+  >}}
+
+      {{< card
+        link="https://dragonhail.github.io/blog/docs/v2x.md"
+        title="V2X"
+  >}}
+
+      {{< card
+        link="https://dragonhail.github.io/blog/docs/tsch.md"
+        title="TSCH"
+  >}}
+
+
 
 
 {{< /cards >}}

@@ -1,8 +1,8 @@
 ---
 title: Projects
 toc: false
-layout: wide
 breadcrumbs: false
+layout: wide
 ---
 
 {{< cards >}}
