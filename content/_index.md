@@ -1,6 +1,5 @@
 ---
 title: Projects
-description: ""
 toc: false
 layout: wide
 ---
