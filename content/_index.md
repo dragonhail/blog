@@ -1,7 +1,7 @@
 ---
 title: Projects
 description: ""
-toc: true
+toc: false
 layout: wide
 ---
 
