@@ -22,10 +22,10 @@ menu:
       pageRef: /bookmarks
       weight: 1
     - name: Papers
-      pageRef: /docs/papers
+      pageRef: /papers
       weight: 2
     - name: Leetcode
-      pageRef: /docs/leetcode
+      pageRef: /leetcode
       weight: 3
     - name: CV
       weight: 4
