@@ -4,6 +4,6 @@ toc: true
 breadcrumbs: false
 weight: 3
 ---
-## 인터페이스?
+## 인터페이스
 
-## abstract class?
+## abstract class
