@@ -4,7 +4,6 @@ toc: true
 breadcrumbs: false
 weight: 2
 ---
-# 스레드
 * CPU 수행 단위
 * PC, register, stack 별도로
 * code, data, os resources 공유
