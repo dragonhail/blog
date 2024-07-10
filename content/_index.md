@@ -1,32 +1,33 @@
 ---
-title: Projects
 toc: false
 breadcrumbs: false
 layout: wide
 ---
-
+# PROJECTS
 {{< cards >}}
+  {{< card
+        link="projects/data"
+        title="Data Pipeline with OpenDart API"
+  >}}
+   
+   {{< card
+        link="projects/dsp"
+        title="Capstone Design: Real time frequency analysis and distance inference"
+  >}}
 
   {{< card
-        link="https://github.com/dragonhail/dart_pipeline"
-        title="Data Pipeline with OpenDart API"
-        image="https://raw.githubusercontent.com/dragonhail/dart_pipeline/main/img.png"
-        imageStyle="object-fit:cover; aspect-ratio:16/9;"
-  >}}
-
-    {{< card
-        link="https://github.com/dragonhail/capstone_design"
+        link="projects/contactless"
         title="Capstone Design: Contact-less button"
-        image=""
-        imageStyle="object-fit:cover; aspect-ratio:16/9;"
   >}}
-
-    {{< card
-        link="https://github.com/dragonhail/capstone_design"
-        title="Capstone Design: Real time frequency analysis and distance inference"
-        image=""
-        imageStyle="object-fit:cover; aspect-ratio:16/9;"
-  >}}
-
 
 {{< /cards >}}
+
+# NOTES
+{{< cards >}}
+  {{< card link="docs/kafka" title="Kafka" >}}
+  {{< card link="docs/os" title="OS" >}}
+{{< /cards >}}
+
+https://github.com/dragonhail/dart_pipeline
+https://github.com/dragonhail/capstone_design
+https://github.com/dragonhail/capstone_design

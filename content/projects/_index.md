@@ -1,14 +1,11 @@
 ---
-title: Projects
+title: PROJECTS
 toc: false
 breadcrumbs: false
 cascade:
   type: docs
 ---
-
-### CS정리
-
 {{< cards >}}
-  {{< card link="/contactless" title="비접촉 버튼" >}}
-  {{< card link="/dsp" title="신호처리를 이용한 위치주정 및 주파수분석" >}}
+  {{< card link="contactless" title="비접촉 버튼" >}}
+  {{< card link="dsp" title="신호처리를 이용한 위치주정 및 주파수분석" >}}
 {{< /cards >}}
