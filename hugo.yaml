@@ -19,21 +19,17 @@ markup:
 
 menu:
   main:
-    - name: NOTES
-      weight: 1
-      pageRef: /docs
-    - name: PROJECTS
-      weight: 2
-      pageRef: /projects
     - name: RESUME
-      weight: 3
+      weight: 1
       url: "https://drive.google.com/file/d/15GsyYVMS3-_fOBAgodLgwsiqu9N0XxuT/view?usp=drive_link"
+      params:
+        icon: bookmark
     - name: Search
-      weight: 4
+      weight: 2
       params:
         type: search
     - name: GitHub
-      weight: 5
+      weight: 3
       url: "https://github.com/dragonhail/"
       params:
         icon: github
