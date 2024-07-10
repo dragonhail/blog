@@ -1,3 +1,3 @@
 ---
-title: OS정리
+title: OS
 ---

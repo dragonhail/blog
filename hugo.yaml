@@ -22,15 +22,18 @@ menu:
     - name: NOTES
       weight: 1
       pageRef: /docs
-    - name: RESUME
+    - name: PROJECTS
       weight: 2
+      pageRef: /projects
+    - name: RESUME
+      weight: 3
       url: "https://drive.google.com/file/d/15GsyYVMS3-_fOBAgodLgwsiqu9N0XxuT/view?usp=drive_link"
     - name: Search
-      weight: 3
+      weight: 4
       params:
         type: search
     - name: GitHub
-      weight: 4
+      weight: 5
       url: "https://github.com/dragonhail/"
       params:
         icon: github
