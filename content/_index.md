@@ -4,6 +4,7 @@ breadcrumbs: false
 layout: wide
 ---
 # PROJECTS
+
 {{< cards >}}
   {{< card
         link="projects/data"
@@ -21,13 +22,9 @@ layout: wide
   >}}
 
 {{< /cards >}}
-
+<br>
 # NOTES
 {{< cards >}}
   {{< card link="docs/kafka" title="Kafka" >}}
   {{< card link="docs/os" title="OS" >}}
 {{< /cards >}}
-
-https://github.com/dragonhail/dart_pipeline
-https://github.com/dragonhail/capstone_design
-https://github.com/dragonhail/capstone_design
