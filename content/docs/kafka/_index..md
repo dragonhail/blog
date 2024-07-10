@@ -2,7 +2,6 @@
 title: Kafka
 toc: true
 breadcrumbs: false
-weight: 1
 ---
 ## 파티션
 * 토픽은 여러 파티션으로 구성
@@ -33,3 +32,5 @@ weight: 1
 
 ## LISTENER
 ## advertised_listener
+
+## 유용한 링크

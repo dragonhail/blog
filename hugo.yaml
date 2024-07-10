@@ -21,7 +21,7 @@ menu:
   main:
     - name: NOTES
       weight: 1
-      pageRef: /notes
+      pageRef: /docs
     - name: RESUME
       weight: 2
       url: "https://drive.google.com/file/d/15GsyYVMS3-_fOBAgodLgwsiqu9N0XxuT/view?usp=drive_link"
