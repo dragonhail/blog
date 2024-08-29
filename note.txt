@@ -260,3 +260,27 @@ Durability - 한 번 완료된 트랜잭션은 계속되어야 한다.( 바꾸�
 데이터베이스 작업은 원본에 직접 하는 것이 아니고 복사본을 만든 후 복사본에 작업을 수행하고 이 후에 원본에 적용
 이러한 복사본이 임시 작업 영역
 임시 작업 영역을 Undo Segment나 Rollback Segment라고 함
+
+3 트랜잭션 관련 명령어
+COMMIT, ROLLBACK, SAVEPOINT
+
+4 기타
+트랜잭션은 DML문장이나 DCL 문장이 처음 성공할 때 생성
+트랜잭션 소멸 시점은 COMMIT이나 ROLLBACK 될 때
+COMMIT은 임시 작업 영역에 수행한 내용을 원본에 반영하는 것, ROLLBACK은 임시작업영역의 데이터를 삭제하는 것
+특정 시점으로 돌아가려면 SAVEPOINT를 이용해서 시점을 만들어 줘야함
+SAVEPOINT가 없으면 임시 작업 영역의 데이터는 버려짐
+
+COMMIT 되는 경우
+-DDL이나 DLC 명령문을 성공하는 경우
+-명시적으로 COMMIT명령을 수행하는 경우
+-데이터베이스 서버나 접속 프로그램을 정상적으로 종료한 경우
+-접속 프로그램이나 데이터베이스 설정을 auto commit으로 하는 경우 SQL 문장이 성공적으로 수행되면 자동으로 COMMIT
+Java는 기본적으로 auto commit
+
+ROLLBACK되는경우
+-명시적으로 ROLLBACK명령을 수행하는 경우
+-비정상적인 종료
+
+SAVEPOINT를 만들고자 하는 경우 SAVEPOINT 이름
+특정 SAVEPOINT로 롤백하고자 하는 경우는 ROLLBACK TO 이름
