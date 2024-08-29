@@ -329,3 +329,22 @@ create temporary table T2(name varchar(20));
 프로그래밍 영역이어서 RDBMS마다 작성하는 방법이 다름
 Oracle에서 이 작업을 하기 위한 문법은 PL/SQL이라고 부름
 MS SQL Server에서는 T-SQL이라 부름
+
+인덱스 생성
+creare [or replace] [unique] index [if not exists] 인덱스이름 [인덱스종류]
+ON 테이블이름(컬럼이름나열) 
+[WAIT n|NOWAIT][인덱스옵션][알고리즘 및 락 옵션]
+락옵션: 쉐어드락, exclusive lock(하나만 사용가능)
+
+인덱스를 생성하는 경우
+-테이블의 행의 개수가 많을 때
+-where 절에 자주 사용되는 경우
+-검색 결과가 2-4% 정도 되는 경우
+-JOIN에 자주 사용되거나 NULL이 많은 경우
+
+인덱스를 생성하지 않는 경우
+-테이블 행 개수가 적을 때
+-중복되는 데이터가 많을때
+-where절에 잘 사용이 되지 않는 경우
+-검색결과가 10% 이상인 경우
+-DML 작업이 많은 경우
