@@ -364,3 +364,11 @@ select * into outfile 'c:\\emp.dat' from `emp`;
 mysqldump -u root -p wnddkd --all-databases > ex.sql
 복원
 mysql -u root -p dbex < dbex.sql
+
+08/30 MongoDB
+UNIX(c/c++)-LINUX(c/c++)-android, GNOME
+           -MACos(UNIX + GUI)-windows
+primitive type: 직접값을 기억, 빠름 a=10 (C, Go가 지원)
+blob: binray로 저장(16진수로 보여줌)
+timestamp: 1970/1/1부터 지나온 시간
+NoSQL에서는 배열의 원소 순서가 다르면 다른 값
