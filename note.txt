@@ -519,9 +519,30 @@ sort({속성:1이나 -1}) #1이면 오름차순, -1이면 내림차순정렬
 
 db.inventory.find({}, {_id:0, tags:0}).sort({"qty":1})
 
-cursor
+cursor(iterator)
 -데이터를 가리키는 포인터
 -mongoDB에서는 find를 이용해서 조회하면 결과로 cursor를 리턴
 -cursor는 2개의 기본적인 메서드를 제공, hasNext()는 다음 데이터 존재 여부를 리턴하고 next()는 다음 데이터를 리턴
 
 변수=find구문 // 변수에 find의 결과를 접근할 수 있는 cursor가 저장
+let cur = db.inventory.find()
+
+cur.hasNext()
+
+cur.next()
+
+cur.hasNext() ? cur.next():null
+파일: 커서로 파일 읽어옴 BOF ~ EOF:NULL
+
+while(cursor;hasNext())
+{
+cursor.next()
+}
+python에서 __iter__ 있으면 순회 가능
+
+쿼리 성능 조회
+find함수 다음에 explain("executionStats")를 호출하면 쿼리 계획을 확인할 수 있음
+거의 모든 데이터베이스에서 이 기능은 제공
+접속 도구가 제공되는 경우도 있음
+복잡한 subquery를 만들거나 join을 할 때 실행 계획을 확인하고 쿼리를 만드는 것이 좋음
+이부분은 데이터베이스 질의 튜닝을 할 때 이용
