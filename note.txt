@@ -597,3 +597,58 @@ try..catch..finally or try..catch
 try..catch..finally: finally에 작성 시 무조건 실행, db와 끊는 것
 try..catch: 성공적으로 수행 못할 시 수행못할 가능성
 
+*MongoDB의 Map Reduce
+-그룹화해서 연산을 수행해 결과를 사용하고자 하는 경우 사용할 수 있는 기능
+-그룹화를 한 후 동시에 연산을 수행한 후 결과를 만들어 리턴
+
+-rating컬렉션에서 rating속성별로 그룹화해서 데이터의 개수를 조회
+1. 그룹화에 사용할 함수를 생성
+let 이름=function() {
+ emit(그룹화할 속성, 집계에 사용할 데이터 속성)
+
+let mapper = function() {
+ emit(this.rating, this.user_id)
+}
+-집계에 사용할 함수에 key로 rating이 넘어가고 value로 user_id 가 넘어감
+
+2.집계에 사용할 함수를 생성
+let 이름=function(key, values) {
+ return 그룹별로 사용할 결과
+}
+-key는 map에서 리턴해주는 그룹화한 속성의 값
+-values는 앞에서 넘겨준 데이터의 배열
+ex) key:1, values:[2]
+key: 2, values:[3]
+key: 3, values: [4, 1]
+
+let reducer = function(key, values) {
+ return values.length
+}
+
+3. 사용
+db.컬렉션.mapReduce(Map 함수, Reduce 함수, {out:{inline:1}})
+
+db.rating.mapReduce(mapper, reducer, {out:{inline:1}})
+
+db.rating.aggregate([{$group:{_id:{"category":"$rating"}, 
+sum_prices:{$sum:"$user_id"}}}])
+
+-MongoDB에서 수정을 하게 되면 행 전체를 갱신
+-One이 붙는 함수는 조건에 맞는 데이터 1개만 갱신
+
+db.user.insertOne({username:"karoid", age:30})
+db.user.insertOne({username:"karoid", age:20})
+
+
+db.user.replaceOne({username: "karoid"},
+ {
+ username: "Karpoid" , status: "Sleep" , points: 100, password: 2222
+ });
+
+db.user.find()로 확인 -> 문서 자체가 변경됨
+
+-업데이트 할 때 기존 속성의 값을 그대로 사용하고자 할 때는 $set:{수정할 내용} 형태로 설정해야
+db.user.update({username:"Kaproid"}, {$set:{score:100}}) #매칭된 값 하나만 수정
+
+db.user.updateMany({username:"Karpoid"}, {$set:{score:1020}}) #매칭된 모든 값 수정
+db.user.find()
