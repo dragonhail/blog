@@ -591,3 +591,9 @@ db.inventory.find({quantity:10}).explain("executionStats")
 between 사용 시 인덱스 사용 효율적
 age 10<30일때 age>=10 and age<=30 보단 age between 10 and 30이 더 효율적(두개 비교vs 한개 비교)
 
+verbose: 로그 출력 여부
+
+try..catch..finally or try..catch
+try..catch..finally: finally에 작성 시 무조건 실행, db와 끊는 것
+try..catch: 성공적으로 수행 못할 시 수행못할 가능성
+
