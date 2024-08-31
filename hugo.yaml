@@ -19,18 +19,12 @@ markup:
 
 menu:
   main:
-    - name: 현대오토에버 모빌리티SW스쿨 1기
-      weight: 1
-      pageRef: mobilityschool/
-    - name: 카프카
-      weight: 2
-      pageRef: kafka/
     - name: Search
-      weight: 3
+      weight: 1
       params:
         type: search
     - name: GitHub
-      weight: 4
+      weight: 2
       url: "https://github.com/dragonhail/"
       params:
         icon: github
