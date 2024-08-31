@@ -6,6 +6,6 @@ sidebar:
   open: true
 ---
 {{< cards >}}
-  {{< card link="mariadb/" title="MariaDB" >}}
-  {{< card link="mongodb/" title="MongoDB" >}}
+  {{< card link="/mariadb/" title="MariaDB" >}}
+  {{< card link="/mongodb/" title="MongoDB" >}}
 {{< /cards >}}
