@@ -4,7 +4,7 @@ cascade:
   type: docs
 ---
 {{< cards >}}
-  {{< card link="mariadb/" title="MariaDB" >}}
-  {{< card link="mongodb/" title="MongoDB" >}}
+  {{< card link="/mariadb" title="MariaDB" >}}
+  {{< card link="/mongodb" title="MongoDB" >}}
 
 {{< /cards >}}

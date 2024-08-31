@@ -1,7 +1,9 @@
 ---
-title: MariaDB
-breadcrumbs: false
+title: 1주차-DML
+cascade:
+  type: docs
 ---
+
 08/29
 # DML: 데이터 조작 언어
 * 예전에는 SELECT를포함시켰는데 최근에는 DQL로 분리
