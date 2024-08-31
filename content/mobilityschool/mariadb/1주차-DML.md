@@ -5,7 +5,7 @@ cascade:
 ---
 
 08/29
-# DML: 데이터 조작 언어
+## DML: 데이터 조작 언어
 * 예전에는 SELECT를포함시켰는데 최근에는 DQL로 분리
 
 # 데이터 삽입 - INSERT
@@ -14,38 +14,29 @@ cascade:
 * INTO는 생략가능
 * 필드목록을 생략할 수 있는데 이 경우에는 테이블을 만들 때 작성한 순서대로 모든 필드의 값을 대입해야
 
-## NSERT, DELETE, UPDATE만을 DML로 분류
-
+## INSERT, DELETE, UPDATE만을 DML로 분류
 * mariadb 는 ""사용해도 삽입가능, DATE입력 시 ' '로 사용해도 삽입 가능
-
 * 여러개의 데이터를 한꺼번에 삽입: DBMS 종류에 따라 허용하지 않는 경우도 있음
-
-INSERT INTO 테이블이름(필드목록) VALUES
-(데이터나열)
-(데이터나열)
-(데이터나열)
-
+* INSERT INTO 테이블이름(필드목록) VALUES <br>
+(데이터나열) <br>
+(데이터나열) <br>
+(데이터나열) <br>
 * 조회문장을 이용해서 데이터를 삽입
 * INSERT INTO 테이블이름(필드목록) SELECT 구문;
-
 * 데이터 복사도 가능하고 구조 복사도 가능
 
 ## SQL Injection공격 조심 X or 1=1
 * 무조건 참이 되는 문장을 삽입
-
 ## 스크립트를 이용해 데이터 삽입 시 중간에 에러가 발생해도 데이터 삽입하고자 하는 경우는 INSERT 다음에 IGNORE 추가해주면 됨
-
-CREATE TABLE espa(
-userid varchar(20) primary key,
-name varchar(20)
+* CREATE TABLE espa( <br>
+userid varchar(20) primary key, <br>
+name varchar(20) <br>
 );
-
--- ignore 추가시 스크립트로 실행 시 중간에 에러나도 계속 수행
-INSERT ignore INTO espa values('karina', '카리나');
-INSERT ignore INTO espa values('winter', '윈터');
-INSERT ignore INTO espa values('winter', '윈터');
-INSERT ignore INTO espa values('aeri', '지젤');
-
+* -- ignore 추가시 스크립트로 실행 시 중간에 에러나도 계속 수행 <br>
+INSERT ignore INTO espa values('karina', '카리나'); <br>
+INSERT ignore INTO espa values('winter', '윈터'); <br>
+INSERT ignore INTO espa values('winter', '윈터'); <br>
+INSERT ignore INTO espa values('aeri', '지젤'); <br>
 ## 여러 개의 구문을 실행할 때 별개의 스레드로 실행하는 것을 고려, 수행 중 실패해도 계속 수행하게 하기위해
 
 # 데이터 삭제 - DELETE
