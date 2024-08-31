@@ -142,30 +142,30 @@ INSERT ignore INTO espa values('aeri', '지젤'); <br>
 * 락옵션: 쉐어드락, exclusive lock(하나만 사용가능)
 
 ### 인덱스를 생성하는 경우
--테이블의 행의 개수가 많을 때
--where 절에 자주 사용되는 경우
--검색 결과가 2-4% 정도 되는 경우
--JOIN에 자주 사용되거나 NULL이 많은 경우
+* 테이블의 행의 개수가 많을 때
+* where 절에 자주 사용되는 경우
+* 검색 결과가 2-4% 정도 되는 경우
+* JOIN에 자주 사용되거나 NULL이 많은 경우
 
-인덱스를 생성하지 않는 경우
--테이블 행 개수가 적을 때
--중복되는 데이터가 많을때
--where절에 잘 사용이 되지 않는 경우
--검색결과가 10% 이상인 경우
--DML 작업이 많은 경우
+### 인덱스를 생성하지 않는 경우
+* 테이블 행 개수가 적을 때
+* 중복되는 데이터가 많을때
+* where절에 잘 사용이 되지 않는 경우
+* 검색결과가 10% 이상인 경우
+* DML 작업이 많은 경우
 
-FULL TABLE SCAN-테이블들의 데이터를 전부 읽는 것
--SQL 문장에서 WHERE 절이 생략된 경우
--WHERE 절에 사용되는 컬럼에 INDEX가 만들어지지 않는 경우
--병렬로 처리하는 경우
--데이터베이스르 만들 때 전체 테이블 스캔을 하려고 힌트를 설정한 경
+### FULL TABLE SCAN-테이블들의 데이터를 전부 읽는 것
+* SQL 문장에서 WHERE 절이 생략된 경우
+* WHERE 절에 사용되는 컬럼에 INDEX가 만들어지지 않는 경우
+* 병렬로 처리하는 경우
+* 데이터베이스르 만들 때 전체 테이블 스캔을 하려고 힌트를 설정한 경
 
-bin폴더에 실행 명령 파일 존재
+### bin폴더
+* 실행 명령 파일 존재
+* 백업이나 검색 결과를 내보내는 기능을 테스트할 때는 디렉토리가 만들어져 있어야 하고 쓰기 권한이 있어야 함
+* select * into outfile 'c:\\emp.dat' from `emp`;
 
-백업이나 검색 결과를 내보내는 기능을 테스트할 때는 디렉토리가 만들어져 있어야 하고 쓰기 권한이 있어야 함
-select * into outfile 'c:\\emp.dat' from `emp`;
-
-백업
-mysqldump -u root -p wnddkd --all-databases > ex.sql
-복원
-mysql -u root -p dbex < dbex.sql
+### 백업
+* mysqldump -u root -p wnddkd --all-databases > ex.sql
+* 복원
+* mysql -u root -p dbex < dbex.sql

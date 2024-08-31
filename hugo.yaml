@@ -41,7 +41,7 @@ params:
     displayLogo: false
 
   footer:
-    enable: true
+    enable: false
     displayCopyright: true
     displayPoweredBy: true
     width: normal
@@ -52,4 +52,3 @@ params:
   editURL:
     enable: false
     base: "https://github.com/imfing/hextra-starter-template/edit/main/content"
-

@@ -1,5 +1,4 @@
 ---
-title:
 layout: wide
 cascade:
   type: docs
@@ -12,5 +11,7 @@ sidebar:
   {{< card link="https://drive.google.com/file/d/1guPN7bAVGAaxPifNWIyIVcFx48vGEpZs/view?usp=sharing" title="비접촉 버튼" >}}
   {{< card link="https://github.com/dragonhail/dart_pipeline" title="데이터 파이프라인" >}}
   {{< card link="/blog/mobilityschool/" title="현대오토에버 모빌리티SW스쿨 1기" >}}
+  {{< card link="/blog/kafka/" title="카프카" >}}
+
 
 {{< /cards >}}
