@@ -1,5 +1,7 @@
 ---
 layout: wide
+cascade:
+  type: docs
 sidebar:
   open: true
 ---
