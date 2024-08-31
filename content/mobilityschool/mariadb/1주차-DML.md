@@ -5,16 +5,16 @@ cascade:
 ---
 
 08/29
-## DML: 데이터 조작 언어
+### DML: 데이터 조작 언어
 * 예전에는 SELECT를포함시켰는데 최근에는 DQL로 분리
 
-# 데이터 삽입 - INSERT
-## 기본 형식
+## 데이터 삽입 - INSERT
+### 기본 형식
 * INSERT INTO 테이블이름(필드목록) VALUES(데이터나열)
 * INTO는 생략가능
 * 필드목록을 생략할 수 있는데 이 경우에는 테이블을 만들 때 작성한 순서대로 모든 필드의 값을 대입해야
 
-## INSERT, DELETE, UPDATE만을 DML로 분류
+### INSERT, DELETE, UPDATE만을 DML로 분류
 * mariadb 는 ""사용해도 삽입가능, DATE입력 시 ' '로 사용해도 삽입 가능
 * 여러개의 데이터를 한꺼번에 삽입: DBMS 종류에 따라 허용하지 않는 경우도 있음
 * INSERT INTO 테이블이름(필드목록) VALUES <br>
@@ -24,10 +24,9 @@ cascade:
 * 조회문장을 이용해서 데이터를 삽입
 * INSERT INTO 테이블이름(필드목록) SELECT 구문;
 * 데이터 복사도 가능하고 구조 복사도 가능
-
-## SQL Injection공격 조심 X or 1=1
+* SQL Injection공격 조심 X or 1=1
 * 무조건 참이 되는 문장을 삽입
-## 스크립트를 이용해 데이터 삽입 시 중간에 에러가 발생해도 데이터 삽입하고자 하는 경우는 INSERT 다음에 IGNORE 추가해주면 됨
+* 스크립트를 이용해 데이터 삽입 시 중간에 에러가 발생해도 데이터 삽입하고자 하는 경우는 INSERT 다음에 IGNORE 추가해주면 됨
 * CREATE TABLE espa( <br>
 userid varchar(20) primary key, <br>
 name varchar(20) <br>
@@ -37,24 +36,23 @@ INSERT ignore INTO espa values('karina', '카리나'); <br>
 INSERT ignore INTO espa values('winter', '윈터'); <br>
 INSERT ignore INTO espa values('winter', '윈터'); <br>
 INSERT ignore INTO espa values('aeri', '지젤'); <br>
-## 여러 개의 구문을 실행할 때 별개의 스레드로 실행하는 것을 고려, 수행 중 실패해도 계속 수행하게 하기위해
+* 여러 개의 구문을 실행할 때 별개의 스레드로 실행하는 것을 고려, 수행 중 실패해도 계속 수행하게 하기위해
 
-# 데이터 삭제 - DELETE
-## 기본 형식
+## 데이터 삭제 - DELETE
+### 기본 형식
 * DELETE FROM 테이블이름 [WHERE 조건];
-
 * FROM을 생략해도 삭제가 되는 경우가 있음
 * 문법에 맞게 작성을 하더라도 실패하는 경우가 있는데 이 경우는 외래키 설정을 확인
 * WHERE 절이 없으면 테이블의 모든 데이터가 삭제
 * 실무에서 사용할 때는 DELETE에 트리거를 걸어 DELETE가 발생할 때 다른 테이블에 데이터를 옮기거나 삭제가 되었다는 표시만 하기도 함
 
-# 데이터수정 - UPDATE
-## 기본형식
+## 데이터수정 - UPDATE
+### 기본형식
 * UPDATE 테이블이름 SET 수정할내용 [WHERE 조건];
 * WHERE 절이 없으면 모든 데이터가 수정됨
 * 결과를 확인할 때는 성공 여부보다는 영향받은 행의 개수를 확인하는 것이 좋음
 
-## transaction
+### transaction
 * 한번에 수행되어야하는 논리적인 작업의 단위
 * 관계형 데이터베이스에서는 하나의 SQL 문장이 물리적인 단위
 

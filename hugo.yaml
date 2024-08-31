@@ -19,7 +19,7 @@ markup:
 
 menu:
   main:
-    - name: 오토에버 모빌리티SW스쿨
+    - name: 현대오토에버 모빌리티SW스쿨 1기
       weight: 1
       pageRef: mobilityschool/
     - name: Search
@@ -27,7 +27,7 @@ menu:
       params:
         type: search
     - name: GitHub
-      weight: 3
+      weight: 3ㄴ
       url: "https://github.com/dragonhail/"
       params:
         icon: github
@@ -38,12 +38,15 @@ params:
     displayLogo: false
 
   footer:
+    enable: true
     displayCopyright: true
     displayPoweredBy: true
+    width: normal
 
+  displayUpdatedDate: true
+  dateFormat: "January 2, 2006"
+  
   editURL:
     enable: false
     base: "https://github.com/imfing/hextra-starter-template/edit/main/content"
 
-  displayUpdatedDate: true
-  dateFormat: "January 2, 2006"
