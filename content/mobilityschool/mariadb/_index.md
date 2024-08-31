@@ -7,5 +7,5 @@ cascade:
 ---
 
 {{< cards >}}
-  {{< card link="1주차-DML" title="1주차-dml" >}}
+  {{< card link="1주차-dml" title="1주차-DML" >}}
 {{< /cards >}}
