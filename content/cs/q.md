@@ -1,3 +1,13 @@
+---
+title: 질문목록
+linkTitle: 질문목록
+layout: wide
+cascade:
+  type: docs
+sidebar:
+  open: true
+---
+
 # 자료구조
 ## 배열(Array)과 연결 리스트(Linked List)의 차이점은 무엇인가요?
 * 배열은 연속된 메모리 공간에 정적으로 저장

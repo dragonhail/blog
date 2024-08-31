@@ -1,3 +1,13 @@
+---
+title: 머신러닝
+linkTitle: 머신러닝
+layout: wide
+cascade:
+  type: docs
+sidebar:
+  open: true
+---
+
 # RNN
 
 # LSTM

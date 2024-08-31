@@ -1,3 +1,13 @@
+---
+title: 운영체제
+linkTitle: 운영체제
+layout: wide
+cascade:
+  type: docs
+sidebar:
+  open: true
+---
+
 # 프로세스
 실행중인 프로그램 인스턴스
 
