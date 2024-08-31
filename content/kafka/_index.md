@@ -1,3 +1,12 @@
+---
+title: Kafka
+layout: wide
+cascade:
+  type: docs
+sidebar:
+  open: true
+---
+
 브로커>토픽>파티션
 
 토픽은 여러개의 파티션을 가짐.

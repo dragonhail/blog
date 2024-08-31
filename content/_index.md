@@ -1,6 +1,10 @@
 ---
-title: PROJECTS
+title:
 layout: wide
+cascade:
+  type: docs
+sidebar:
+  open: true
 ---
 
 {{< cards >}}
