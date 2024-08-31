@@ -2,7 +2,7 @@
 title: MariaDB
 cascade:
   type: docs
-  sidebar:
+sidebar:
   open: true
 ---
 
