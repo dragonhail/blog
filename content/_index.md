@@ -1,7 +1,5 @@
 ---
 title: PROJECTS
-toc: false
-breadcrumbs: false
 layout: wide
 ---
 
