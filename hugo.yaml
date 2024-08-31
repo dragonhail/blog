@@ -27,7 +27,7 @@ menu:
       params:
         type: search
     - name: GitHub
-      weight: 3ㄴ
+      weight: 3
       url: "https://github.com/dragonhail/"
       params:
         icon: github
