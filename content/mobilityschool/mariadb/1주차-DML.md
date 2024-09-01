@@ -153,10 +153,12 @@ UPDATE 테이블이름 SET 수정할내용 [WHERE 조건];
 * MS SQL Server에서는 T-SQL이라 부름
 
 ### 인덱스 생성
-* creare [or replace] [unique] index [if not exists] 인덱스이름 [인덱스종류]
-* ON 테이블이름(컬럼이름나열) 
-* [WAIT n|NOWAIT][인덱스옵션][알고리즘 및 락 옵션]
-* 락옵션: 쉐어드락, exclusive lock(하나만 사용가능)
+```sql 
+create [or replace] [unique] index [if not exists] 인덱스이름 [인덱스종류]
+ON 테이블이름(컬럼이름나열) 
+[WAIT n|NOWAIT][인덱스옵션][알고리즘 및 락 옵션]
+락옵션: 쉐어드락, exclusive lock(하나만 사용가능)
+```
 
 ### 인덱스를 생성하는 경우
 * 테이블의 행의 개수가 많을 때
@@ -180,9 +182,16 @@ UPDATE 테이블이름 SET 수정할내용 [WHERE 조건];
 ### bin폴더
 * 실행 명령 파일 존재
 * 백업이나 검색 결과를 내보내는 기능을 테스트할 때는 디렉토리가 만들어져 있어야 하고 쓰기 권한이 있어야 함
-* select * into outfile 'c:\\emp.dat' from `emp`;
+```sql
+select * into outfile 'c:\\emp.dat' from `emp`;
+```
 
 ### 백업
-* mysqldump -u root -p wnddkd --all-databases > ex.sql
-* 복원
-* mysql -u root -p dbex < dbex.sql
+```bash
+mysqldump -u root -p wnddkd --all-databases > ex.sql
+```
+
+### 복원
+```bash
+mysql -u root -p dbex < dbex.sql
+```
