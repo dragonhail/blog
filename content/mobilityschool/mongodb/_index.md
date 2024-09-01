@@ -7,95 +7,100 @@ sidebar:
 ---
 
 08/30 MongoDB
-UNIX(c/c++)-LINUX(c/c++)-android, GNOME
+* UNIX(c/c++)-LINUX(c/c++)-android, GNOME<br>
            -MACos(UNIX + GUI)-windows
-primitive type: 직접값을 기억, 빠름 a=10 (C, Go가 지원)
-blob: binray로 저장(16진수로 보여줌)
-timestamp: 1970/1/1부터 지나온 시간
-NoSQL에서는 배열의 원소 순서가 다르면 다른 값
-락 걸리면 읽고쓰기 불가
-맵리듀스
-삽입삭제갱신-RDBMS, 조회-NoSQL(유연, 스타트업이 많이 사용)
+* primitive type: 직접값을 기억, 빠름 a=10 (C, Go가 지원)
+* blob: binray로 저장(16진수로 보여줌)
+* timestamp: 1970/1/1부터 지나온 시간
+* NoSQL에서는 배열의 원소 순서가 다르면 다른 값
+* 락 걸리면 읽고쓰기 불가
+* 맵리듀스
+* 삽입삭제갱신-RDBMS, 조회-NoSQL(유연, 스타트업이 많이 사용)
 
-프로그램 접속 시 두가지 필요: 도메인/IP주소(컴퓨터구별) + 포트번호(프로세스 구별)
-mongodb에서 use ex하면 이름만 생성, 데이터 넣어야 db 공간 할당
+* 프로그램 접속 시 두가지 필요: 도메인/IP주소(컴퓨터구별) + 포트번호(프로세스 구별)
+* mongodb에서 use ex하면 이름만 생성, 데이터 넣어야 db 공간 할당
 
-mongodb 명령어
-db->현재db확인
-showdbs->db목록확인
-use 이름->db 생성 및 전환
-db.dropDatabase() 이름->현재 사용중 db 삭제
-샘플 데이터 삽입: db.mycollection.insertOne({name:1})
-mongodb에서는 db에 데이터가 존재해야 실제로 db 생성
-collection
--RDBMS에서 테이블 또는 릴레이션에 해당
--테이블은 정규화된 데이터, 컬렉션은 비정규화된 데이터
--mongoDB에서는 JOIN을 지원하지 않음, 하나의 컬렉션에 최대한 많은 양의 데이터를 저장하는 것 권장
--성능측면에서는 하나의 컬렉션에 너무 많은 데이터 저장하게 되면 디스크 읽기 오퍼레이션이 많이 필요, 캐시 효율이 떨어지므로 여러개의 컬렉션을 생성
-OS-Memory(주기억장치)-디스크(보조기억장치)
-Cache Ratio: 캐시에 데이터 있을 확률
--컬렉션 직접 생성: db.createCollection("컬렉션이름")
--db 모든 컬렉션 조회: db.getCollectionNames() 또는 show collections
--컬렉션 제거: db.컬렉션이름.drop()
--이름 변경: db.컬렉션이름.renameCollection(이름)
--Capped Collection: 크기 초과 시 자동으로 가장 오래된 데이터를 삭제하고 데이터를 삽입
--로그 데이터나 일정 시간 동안만 보관하는 통계 데이터를 보관하고자 하는 경우에 유용
+### mongodb 명령어
+* db->현재db확인
+* showdbs->db목록확인
+* use 이름->db 생성 및 전환
+* db.dropDatabase() 이름->현재 사용중 db 삭제
+* 샘플 데이터 삽입: db.mycollection.insertOne({name:1})
+* mongodb에서는 db에 데이터가 존재해야 실제로 db 생성
 
-view
--조회만 가능한 db개체
+### collection
+* RDBMS에서 테이블 또는 릴레이션에 해당
+* 테이블은 정규화된 데이터, 컬렉션은 비정규화된 데이터
+* mongoDB에서는 JOIN을 지원하지 않음, 하나의 컬렉션에 최대한 많은 양의 데이터를 저장하는 것 권장
+* 성능측면에서는 하나의 컬렉션에 너무 많은 데이터 저장하게 되면 디스크 읽기 오퍼레이션이 많이 필요, 캐시 효율이 떨어지므로 여러개의 컬렉션을 생성
+* OS-Memory(주기억장치)-디스크(보조기억장치)
+* Cache Ratio: 캐시에 데이터 있을 확률
+* 컬렉션 직접 생성: db.createCollection("컬렉션이름")
+* db 모든 컬렉션 조회: db.getCollectionNames() 또는 show collections
+* 컬렉션 제거: db.컬렉션이름.drop()
+* 이름 변경: db.컬렉션이름.renameCollection(이름)
+* 로그 데이터나 일정 시간 동안만 보관하는 통계 데이터를 보관하고자 하는 경우에 유용
+* view: 조회만 가능한 db개체
 
-capped collection 사용
--db.createCollection('cappedcollection', {capped:true, size:10000})
--db.cappedcollection.insertOne({x:1})
--db.cappedcollection.find()
--for문 사용가능 for(i=0;i<1000;i++){db.cappedcollection.insertOne({x:i})}
+### capped collection
+* Capped Collection: 크기 초과 시 자동으로 가장 오래된 데이터를 삭제하고 데이터를 삽입
+```sql
+db.createCollection('cappedcollection', {capped:true, size:10000})
+db.cappedcollection.insertOne({x:1})
+db.cappedcollection.find()
+for문 사용가능 for(i=0;i<1000;i++){db.cappedcollection.insertOne({x:i})}
+```
 
-2 도큐먼트 생성 - 데이터 추가
--도큐먼트 레벨에서 원자적으로 실행
--데이터는 JSON 형식으로 표현
--데이터 삽입할 때 _id 라는 key 값을 설정하지 않으면, _id 라는 컬럼의 값으로 key를 생성해서 삽입을 해줌
--삽입하는함수로는 insert, save, insertOne, insertMany가 있음
--데이터를 삽입할 때 배열로 삽입하면 데이터를 분리해서 저장
-JSON: 배열이 맨 밖에 있는 것 불가 {} 안에 위치
-배열 사용시 순서 있지만 의미부여 X, 세세하게 알려줘야
-
+### 2 도큐먼트 생성 - 데이터 추가
+* 도큐먼트 레벨에서 원자적으로 실행
+* 데이터는 JSON 형식으로 표현
+* 데이터 삽입할 때 _id 라는 key 값을 설정하지 않으면, _id 라는 컬럼의 값으로 key를 생성해서 삽입을 해줌
+* 삽입하는함수로는 insert, save, insertOne, insertMany가 있음
+* 데이터를 삽입할 때 배열로 삽입하면 데이터를 분리해서 저장
+* JSON: 배열이 맨 밖에 있는 것 불가 {} 안에 위치
+* 배열 사용시 순서 있지만 의미부여 X, 세세하게 알려줘야
+```sql
 db.num.insert([1,2,3])
 
 db.num.find()
+```
 
-데이터를 삽입할 때 2번째 매개변수로 ordered 설정 가능, 이 값이 true이면 싱글스레드 이용, false이면 멀티 스레드 이용
-여러 개의 데이터를 한꺼번에 삽입할 때 싱글 스레드를 사용하는 경우 에러가 발생하면 뒤의 데이터는 삽입되지 않음
-멀티스레드를 사용하면 에러가 발생한 데이터만 삽입되지 않음
+* 데이터를 삽입할 때 2번째 매개변수로 ordered 설정 가능, 이 값이 true이면 싱글스레드 이용, false이면 멀티 스레드 이용
+여러 개의 데이터를 한꺼번에 삽입할 때 싱글 스레드를 사용하는 경우 에러가 발생하면 뒤의 데이터는 삽입되지 않음 <br>
+멀티스레드를 사용하면 에러가 발생한 데이터만 삽입되지 않음 <br>
 
+```sql
 db.sample.createIndex({name:1}, {unique:true})
 
 db.sample.insert({name:"park"})
 
 db.sample.insert([{name:"kim"}, {name:"park"}, {name: "lee"}]) #싱글스레드일 때 위 경우 lee는 못들어감
 
-db.sample.find()
+db.sample.find()d
 
 db.sample.insert([{name:"lee"}, {name:"park"}, {name: "choi"}], {ordered:false}) #멀티스레드일 경우 choi가 삽입
 db.sample.find()
-멀티스레드 프로그래밍 할때 별도의 작업 할당
+```
 
-ObjectId
--12Byte로 구성된 자료형
--_id필드에 ObjectID를 할당하는 방식으로 도큐먼트를 삽입할 때 일련번호를 부여
--new ObjectId()를 이용해서 직접 생성가능하고, _id필드에 직접 삽입하는 것이 가능
+* 멀티스레드 프로그래밍 할때 별도의 작업 할당
 
-CRUD
-*데이터삽입
--writeConcern
--thashing: 커밋 너무 많이 해 다른 작업 불가->일정한 시간, 개수단위로 커밋, 임시데이터베이스 생성 후 원본에 커밋
--insertOne, insertMany
+* ObjectId
+12Byte로 구성된 자료형 <br>
+_id필드에 ObjectID를 할당하는 방식으로 도큐먼트를 삽입할 때 일련번호를 부여<br>
+new ObjectId()를 이용해서 직접 생성가능하고, _id필드에 직접 삽입하는 것이 가능<br>
 
-CQRS패턴: 읽기와 쓰기 분리
--애플리케이션 분리, 저장소도 분리
--Read App생성(NoSQL), 메시지브로커/카프카(read & Write 사이 버퍼로 데이터 일치하게 사용), Write App생성(RDBMS), 저장소 생성, 백업본 필요
--MongoDB는 Read가 강함
+### CRUD
+* 데이터삽입
+* writeConcern
+* thashing: 커밋 너무 많이 해 다른 작업 불가->일정한 시간, 개수단위로 커밋, 임시데이터베이스 생성 후 원본에 커밋
+* insertOne, insertMany
 
-UPSERT: 있으면 수정, 없으면 삽입
+### CQRS패턴: 읽기와 쓰기 분리
+* 애플리케이션 분리, 저장소도 분리
+* Read App생성(NoSQL), 메시지브로커/카프카(read & Write 사이 버퍼로 데이터 일치하게 사용), Write App생성(RDBMS), 저장소 생성, 백업본 필요
+* MongoDB는 Read가 강함
+
+* UPSERT: 있으면 수정, 없으면 삽입
 
 mongodb는 js 프로그래밍 가능
 let num = 1
@@ -207,7 +212,7 @@ db.inventory.find({quantity:10}).explain("executionStats")
 EX)
 1001 1002 1003 1004 1005 5개의 데이터 있음
 커서가 하나씩 읽음
-루트 인덱스 생성:        1003
+루트 인덱스 생성:         1003
                         /    \
                1001, 1002 <-->  1004, 1005
 트리 형태로 인덱스 생성
