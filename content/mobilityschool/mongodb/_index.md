@@ -2,6 +2,7 @@
 title: MongoDB
 cascade:
   type: docs
+weight: 2
 sidebar:
   open: true
 ---
@@ -76,7 +77,7 @@ db.sample.insert({name:"park"})
 
 db.sample.insert([{name:"kim"}, {name:"park"}, {name: "lee"}]) #싱글스레드일 때 위 경우 lee는 못들어감
 
-db.sample.find()d
+db.sample.find()
 
 db.sample.insert([{name:"lee"}, {name:"park"}, {name: "choi"}], {ordered:false}) #멀티스레드일 경우 choi가 삽입
 db.sample.find()
@@ -102,28 +103,40 @@ new ObjectId()를 이용해서 직접 생성가능하고, _id필드에 직접 �
 
 * UPSERT: 있으면 수정, 없으면 삽입
 
-mongodb는 js 프로그래밍 가능
+* mongodb는 js 프로그래밍 가능
+
+```javascript
 let num = 1
 for(let i=0; i<3; i++)(db.sample.insertOne({name:"user"+i, score:num}))
+```
 
-확인: db.sample.find()
+* 확인: db.sample.find()
 
-*데이터 조회
--관계형 db는 조회를 하면 row의 집합리턴, mongodb는 cursor를 리턴
--db.컬렉션이름.find(query-행에대한조건, projection-속성이름)
--json 파일로 만들어진 데이터를 가져오기
+### 데이터 조회
+* 관계형 db는 조회를 하면 row의 집합리턴, mongodb는 cursor를 리턴
+```sql
+db.컬렉션이름.find(query-행에대한조건, projection-속성이름)
+```
+* json 파일로 만들어진 데이터를 가져오기
+
+```bash
 mongoimport -d 데이터베이스이름 -c 컬렉션이름 < 파일경로
+```
 
-inventory 컬렉션에서 item 속성의 값이 hello인 데이터를 조회
+* inventory 컬렉션에서 item 속성의 값이 hello인 데이터를 조회
+```sql
 db.inventory.find({item:{$eq:"hello"}})
+```
 
-inventory 컬렉션에서 tags 속성의 값이 blank 이거나 blue인 데이터를 조회
+*inventory 컬렉션에서 tags 속성의 값이 blank 이거나 blue인 데이터를 조회
+```sql
 db.inventory.find({tags:{$in:["blank", "blue"]}})
+```
 
-Regex
--users컬렉션에서 name에 a가 포함된 데이터
--db.users.find({name: /a/})
--db.users.find({name: /[0-9]/})
+### Regex
+* users컬렉션에서 name에 a가 포함된 데이터
+* db.users.find({name: /a/})
+* db.users.find({name: /[0-9]/})
 
 [ab] a or b
 [a-z A-Z] 알파벳
@@ -131,8 +144,8 @@ Regex
 S$: S로 끝나는
 [^S]: S제외
 
--pa로 시작하는 데이터 조회
--db.users.find({name: /^pa/})
+* pa로 시작하는 데이터 조회
+* db.users.find({name: /^pa/})
 
 1개:
 -데이터 존재: 데이터 리턴
