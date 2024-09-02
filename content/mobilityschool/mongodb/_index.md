@@ -7,7 +7,8 @@ sidebar:
   open: true
 ---
 
-08/30 MongoDB
+08/30
+### MongoDB
 * UNIX(c/c++)-LINUX(c/c++)-android, GNOME<br>
            -MACos(UNIX + GUI)-windows
 * primitive type: 직접값을 기억, 빠름 a=10 (C, Go가 지원)
@@ -21,7 +22,7 @@ sidebar:
 * 프로그램 접속 시 두가지 필요: 도메인/IP주소(컴퓨터구별) + 포트번호(프로세스 구별)
 * mongodb에서 use ex하면 이름만 생성, 데이터 넣어야 db 공간 할당
 
-### mongodb 명령어
+### Mongodb 명령어
 * db->현재db확인
 * showdbs->db목록확인
 * use 이름->db 생성 및 전환
@@ -29,7 +30,7 @@ sidebar:
 * 샘플 데이터 삽입: db.mycollection.insertOne({name:1})
 * mongodb에서는 db에 데이터가 존재해야 실제로 db 생성
 
-### collection
+### Collection
 * RDBMS에서 테이블 또는 릴레이션에 해당
 * 테이블은 정규화된 데이터, 컬렉션은 비정규화된 데이터
 * mongoDB에서는 JOIN을 지원하지 않음, 하나의 컬렉션에 최대한 많은 양의 데이터를 저장하는 것 권장
@@ -43,9 +44,9 @@ sidebar:
 * 로그 데이터나 일정 시간 동안만 보관하는 통계 데이터를 보관하고자 하는 경우에 유용
 * view: 조회만 가능한 db개체
 
-### capped collection
+### Capped Collection
 * Capped Collection: 크기 초과 시 자동으로 가장 오래된 데이터를 삭제하고 데이터를 삽입
-```sql
+```javascript
 db.createCollection('cappedcollection', {capped:true, size:10000})
 db.cappedcollection.insertOne({x:1})
 db.cappedcollection.find()
@@ -60,7 +61,7 @@ for문 사용가능 for(i=0;i<1000;i++){db.cappedcollection.insertOne({x:i})}
 * 데이터를 삽입할 때 배열로 삽입하면 데이터를 분리해서 저장
 * JSON: 배열이 맨 밖에 있는 것 불가 {} 안에 위치
 * 배열 사용시 순서 있지만 의미부여 X, 세세하게 알려줘야
-```sql
+```javascript
 db.num.insert([1,2,3])
 
 db.num.find()
@@ -70,7 +71,7 @@ db.num.find()
 여러 개의 데이터를 한꺼번에 삽입할 때 싱글 스레드를 사용하는 경우 에러가 발생하면 뒤의 데이터는 삽입되지 않음 <br>
 멀티스레드를 사용하면 에러가 발생한 데이터만 삽입되지 않음 <br>
 
-```sql
+```javascript
 db.sample.createIndex({name:1}, {unique:true})
 
 db.sample.insert({name:"park"})
@@ -114,187 +115,220 @@ for(let i=0; i<3; i++)(db.sample.insertOne({name:"user"+i, score:num}))
 
 ### 데이터 조회
 * 관계형 db는 조회를 하면 row의 집합리턴, mongodb는 cursor를 리턴
-```sql
+```javascript
 db.컬렉션이름.find(query-행에대한조건, projection-속성이름)
 ```
 * json 파일로 만들어진 데이터를 가져오기
 
-```bash
+```shell
 mongoimport -d 데이터베이스이름 -c 컬렉션이름 < 파일경로
 ```
 
 * inventory 컬렉션에서 item 속성의 값이 hello인 데이터를 조회
-```sql
+```javascript
 db.inventory.find({item:{$eq:"hello"}})
 ```
 
-*inventory 컬렉션에서 tags 속성의 값이 blank 이거나 blue인 데이터를 조회
-```sql
+* inventory 컬렉션에서 tags 속성의 값이 blank 이거나 blue인 데이터를 조회
+```javascript
 db.inventory.find({tags:{$in:["blank", "blue"]}})
 ```
 
 ### Regex
 * users컬렉션에서 name에 a가 포함된 데이터
-* db.users.find({name: /a/})
-* db.users.find({name: /[0-9]/})
+```javascript
+db.users.find({name: /a/})
+db.users.find({name: /[0-9]/})
+```
 
-[ab] a or b
-[a-z A-Z] 알파벳
-^S: S로 시작하는
-S$: S로 끝나는
-[^S]: S제외
+* [ab] a or b
+* [a-z A-Z] 알파벳
+* ^S: S로 시작하는
+* S$: S로 끝나는
+* [^S]: S제외
 
 * pa로 시작하는 데이터 조회
 * db.users.find({name: /^pa/})
 
-1개:
--데이터 존재: 데이터 리턴
--데이터 없음->NULL리턴
+* 1개:
+  * 데이터 존재: 데이터 리턴
+  * 데이터 없음->NULL리턴
 
-0개 이상: 
--데이터가 존재하면 데이터리턴
--데이터 없음: [] 빈 배열 리턴
+* 0개 이상: 
+  * 데이터가 존재하면 데이터리턴
+  * 데이터 없음: [] 빈 배열 리턴
 
-inventory 컬렉션에는 item, qty, tags 속성이 존재
-tags 속성에는 배열로 데이터가 존재
+* inventory 컬렉션에는 item, qty, tags 속성이 존재
+* tags 속성에는 배열로 데이터가 존재
 
-tags 속성에서 red를 포함하는 데이터 조회
+* tags 속성에서 red를 포함하는 데이터 조회
+```javascript
 db.inventory.find({tags:"red"})
 db.inventory.find({tags:"red"}, {"_id":0, "item":1}) #_id 생략
+```
 
--- red와 blank순으로 있는 데이터만 조회
+* red와 blank순으로 있는 데이터만 조회
+```javascript
 db.inventory.find({tags:["red", "blank"]}, {"_id":0, "item":1, "tags":1})
+```
 
---데이터 개수 제한은 limit 함수
-db.inventory.find().limit(2) # 2개만 표시
--- 데이터 1개만 조회할 때는 db.inventory.findOne() 또는 db.inventory.find().limit(1)
+* 데이터 개수 제한은 limit 함수
+* db.inventory.find().limit(2) # 2개만 표시
+* 데이터 1개만 조회할 때는 db.inventory.findOne() 또는 db.inventory.find().limit(1)
 
---건너뛸 때는 skip
+* 건너뛸 때는 skip
+```javascript
 db.inventory.find().skip(2)
+```
 
--- 데이터 정렬: sort 함수를 이용, 매개변수로 객체를 대입
-sort({속성:1이나 -1}) #1이면 오름차순, -1이면 내림차순정렬
+* 데이터 정렬: sort 함수를 이용, 매개변수로 객체를 대입 <br>
+sort({속성:1이나 -1}) #1이면 오름차순, -1이면 내림차순정렬 <br>
 여러 개의 속성 나열 가능
-
+```javascript
 db.inventory.find({}, {_id:0, tags:0}).sort({"qty":1})
+```
 
-cursor(iterator)
--데이터를 가리키는 포인터
--mongoDB에서는 find를 이용해서 조회하면 결과로 cursor를 리턴
--cursor는 2개의 기본적인 메서드를 제공, hasNext()는 다음 데이터 존재 여부를 리턴하고 next()는 다음 데이터를 리턴
+### cursor(iterator)
+* 데이터를 가리키는 포인터
+* mongoDB에서는 find를 이용해서 조회하면 결과로 cursor를 리턴
+* cursor는 2개의 기본적인 메서드를 제공, hasNext()는 다음 데이터 존재 여부를 리턴하고 next()는 다음 데이터를 리턴
 
-변수=find구문 // 변수에 find의 결과를 접근할 수 있는 cursor가 저장
+* 변수=find구문 // 변수에 find의 결과를 접근할 수 있는 cursor가 저장
+```javascript
 let cur = db.inventory.find()
 
 cur.hasNext()
 
 cur.next()
 
-cur.hasNext() ? cur.next():null
-파일: 커서로 파일 읽어옴 BOF ~ EOF:NULL
 
+cur.hasNext() ? cur.next():null
+```
+
+* 파일: 커서로 파일 읽어옴 BOF ~ EOF:NULL
+
+```javascript
 while(cursor;hasNext())
 {
 cursor.next()
 }
-python에서 __iter__ 있으면 순회 가능
+```
+* python에서 __iter__ 있으면 순회 가능
 
-*쿼리 성능 조회
-find함수 다음에 explain("executionStats")를 호출하면 쿼리 계획을 확인할 수 있음
-거의 모든 데이터베이스에서 이 기능은 제공
-접속 도구가 제공되는 경우도 있음
-복잡한 subquery를 만들거나 join을 할 때 실행 계획을 확인하고 쿼리를 만드는 것이 좋음
-이부분은 데이터베이스 질의 튜닝을 할 때 이용
+### 쿼리 성능 조회
+* find함수 다음에 explain("executionStats")를 호출하면 쿼리 계획을 확인할 수 있음 <br>
+거의 모든 데이터베이스에서 이 기능은 제공 <br>
+접속 도구가 제공되는 경우도 있음<br>
+복잡한 subquery를 만들거나 join을 할 때 실행 계획을 확인하고 쿼리를 만드는 것이 좋음<br>
+이부분은 데이터베이스 질의 튜닝을 할 때 이용<br>
 
-*인덱스 생성
-db컬렉션이름.createIndex({"컬럼이름":1})
+* 인덱스 생성 <br>
+db컬렉션이름.createIndex({"컬럼이름":1}) <br>
 인덱스는 조회성능을 높여줌
 
-*컬렉션 삭제
+* 컬렉션 삭제
+```javascript
+db.inventory.drop()
+```
+
+* 데이터추가
+```javascript
+db.inventory.insert({_id:1, item:"f1", type:"food", quantity:500})
+```
+
+* 조회 실행 계획 확인
+```javascript
+db.inventory.find({quantity:10}).explain("executionStats")
+```
+
+### 인덱스
+* 인덱스만드는경우: 특정 컬럼을 조회에 많이 사용할 때, 결과가 2~4%정도 될때 <br>
+이 외의 경우 풀테이블 스캔 시 안만드는게 나음 <br>
+EX) <br>
+1001 1002 1003 1004 1005 5개의 데이터 있음<br>
+커서가 하나씩 읽음<br>
+루트 인덱스 생성:         1003<br>
+                        /    \<br>
+               1001, 1002 <-->  1004, 1005<br>
+트리 형태로 인덱스 생성<br>
+트리로 만드는 이유: 속도가 더 빠름<br>
+특정 데이터 찾을때는 트리 방식이 빠름. 하지만 모든 데이터 조회시 순차적 검색이 더빠름<br>
+[3] -> 0, 0-1, 0-1-2 방식으로 찾음<br>
+커서는 0,1,2,3 방식으로 찾음<br>
+인덱스는 더블링크드리스트로 만들어짐, 풀테이블 스캔 시 포인터 계속 따라다녀야 함<br>
+링크드리스트vs배열: 배열 속도가 더 빠름<br>
+링크드리스트 데이터는 비연속적, 포인터가 다음 데이터 가리킴<br>
+
+```javascript
 db.inventory.drop()
 
-*데이터추가
 db.inventory.insert({_id:1, item:"f1", type:"food", quantity:500})
+```
 
-*조회 실행 계획 확인
+* 인덱스를 생성하지 않고 조회한 경우 실행 계획 확인
+```javascript
 db.inventory.find({quantity:10}).explain("executionStats")
-
-*인덱스
-인덱스만드는경우: 특정 컬럼을 조회에 많이 사용할 때, 결과가 2~4%정도 될때
-이 외의 경우 풀테이블 스캔 시 안만드는게 낫다.
-EX)
-1001 1002 1003 1004 1005 5개의 데이터 있음
-커서가 하나씩 읽음
-루트 인덱스 생성:         1003
-                        /    \
-               1001, 1002 <-->  1004, 1005
-트리 형태로 인덱스 생성
-트리로 만드는 이유: 속도가 더 빠름
-특정 데이터 찾을때는 트리 방식이 빠름. 하지만 모든 데이터 조회시 순차적 검색이 더빠름
-[3] -> 0, 0-1, 0-1-2 방식으로 찾음
-커서는 0,1,2,3 방식으로 찾음
-인덱스는 더블링크드리스트로 만들어짐, 풀테이블 스캔 시 포인터 계속 따라다녀야 함
-링크드리스트vs배열: 배열 속도가 더 빠름
-링크드리스트 데이터는 비연속적, 포인터가 다음 데이터 가리킴
-
-db.inventory.drop()
-
-db.inventory.insert({_id:1, item:"f1", type:"food", quantity:500})
---인덱스를 생성하지 않고 조회한 경우 실행 계획 확인
-db.inventory.find({quantity:10}).explain("executionStats")
-
--- 인덱스 생성
+```
+* 인덱스 생성
+```javascript
 db.inventory.createIndex({quantity:1})
 db.inventory.find({quantity:10}).explain("executionStats")
+```
 
-between 사용 시 인덱스 사용 효율적
-age 10<30일때 age>=10 and age<=30 보단 age between 10 and 30이 더 효율적(두개 비교vs 한개 비교)
+* between 사용 시 인덱스 사용 효율적
+* age 10<30일때 age>=10 and age<=30 보단 age between 10 and 30이 더 효율적(두개 비교vs 한개 비교)
 
-verbose: 로그 출력 여부
+* verbose: 로그 출력 여부
 
-try..catch..finally or try..catch
-try..catch..finally: finally에 작성 시 무조건 실행, db와 끊는 것
-try..catch: 성공적으로 수행 못할 시 수행못할 가능성
+* try..catch..finally or try..catch
+* try..catch..finally: finally에 작성 시 무조건 실행, db와 끊는 것
+* try..catch: 성공적으로 수행 못할 시 수행못할 가능성
 
-*MongoDB의 Map Reduce
--그룹화해서 연산을 수행해 결과를 사용하고자 하는 경우 사용할 수 있는 기능
--그룹화를 한 후 동시에 연산을 수행한 후 결과를 만들어 리턴
+### MongoDB의 Map Reduce
+* 그룹화해서 연산을 수행해 결과를 사용하고자 하는 경우 사용할 수 있는 기능
+* 그룹화를 한 후 동시에 연산을 수행한 후 결과를 만들어 리턴
 
--rating컬렉션에서 rating속성별로 그룹화해서 데이터의 개수를 조회
+* rating컬렉션에서 rating속성별로 그룹화해서 데이터의 개수를 조회
 1. 그룹화에 사용할 함수를 생성
+```javascript
 let 이름=function() {
  emit(그룹화할 속성, 집계에 사용할 데이터 속성)
 
 let mapper = function() {
  emit(this.rating, this.user_id)
 }
--집계에 사용할 함수에 key로 rating이 넘어가고 value로 user_id 가 넘어감
+```
+* 집계에 사용할 함수에 key로 rating이 넘어가고 value로 user_id 가 넘어감
 
-2.집계에 사용할 함수를 생성
+2. 집계에 사용할 함수를 생성
+```javascript
 let 이름=function(key, values) {
  return 그룹별로 사용할 결과
 }
--key는 map에서 리턴해주는 그룹화한 속성의 값
--values는 앞에서 넘겨준 데이터의 배열
-ex) key:1, values:[2]
-key: 2, values:[3]
-key: 3, values: [4, 1]
+```
+* key는 map에서 리턴해주는 그룹화한 속성의 값
+* values는 앞에서 넘겨준 데이터의 배열
 
+* ex) key:1, values:[2] <br>
+key: 2, values:[3]<br>
+key: 3, values: [4, 1]<br>
+```javascript
 let reducer = function(key, values) {
  return values.length
 }
-
+```
 3. 사용
+```javascript
 db.컬렉션.mapReduce(Map 함수, Reduce 함수, {out:{inline:1}})
-
+=>
 db.rating.mapReduce(mapper, reducer, {out:{inline:1}})
 
-db.rating.aggregate([{$group:{_id:{"category":"$rating"}, 
-sum_prices:{$sum:"$user_id"}}}])
+db.rating.aggregate([{$group:{_id:{"category":"$rating"}, sum_prices:{$sum:"$user_id"}}}])
+```
 
--MongoDB에서 수정을 하게 되면 행 전체를 갱신
--One이 붙는 함수는 조건에 맞는 데이터 1개만 갱신
-
+* MongoDB에서 수정을 하게 되면 행 전체를 갱신
+* One이 붙는 함수는 조건에 맞는 데이터 1개만 갱신
+```javascript
 db.user.insertOne({username:"karoid", age:30})
 db.user.insertOne({username:"karoid", age:20})
 
@@ -303,11 +337,14 @@ db.user.replaceOne({username: "karoid"},
  {
  username: "Karpoid" , status: "Sleep" , points: 100, password: 2222
  });
+```
 
-db.user.find()로 확인 -> 문서 자체가 변경됨
+* db.user.find()로 확인 -> 문서 자체가 변경됨
 
--업데이트 할 때 기존 속성의 값을 그대로 사용하고자 할 때는 $set:{수정할 내용} 형태로 설정해야
+* 업데이트 할 때 기존 속성의 값을 그대로 사용하고자 할 때는 $set:{수정할 내용} 형태로 설정해야
+```javascript
 db.user.update({username:"Kaproid"}, {$set:{score:100}}) #매칭된 값 하나만 수정
 
 db.user.updateMany({username:"Karpoid"}, {$set:{score:1020}}) #매칭된 모든 값 수정
 db.user.find()
+```
