@@ -65,7 +65,7 @@ rpush (key) (value)
 lrange (key) (0-9) (-1-9)
 ```
 
-* 여러개 저장 및 읽어오기 - mset, mget
+* 여러 개 저장 및 읽어오기 - mset, mget
 * 모든키 조회: keys *
 * 패턴 적용 가능
 * List: 하나의 key에 여러 개의 데이터를 인덱스 순서대로 저장
@@ -81,6 +81,32 @@ lrange (key) (0-9) (-1-9)
   * 삭제: srem (키)
 * spop
 * srandmember
+* sorted set: 하나의 키에 여러개 데이터, score-value 형태
+  * score를 이용해 데이터 정렬 및 저장
+  * 데이터 삽입: zadd 사용
+  ```bash
+  zadd "key4" 0 "Happy" 2 "Koo" 1 "Good"
+  ```
+  * key의 범위를 설정해 데이터 가져오는 zrange를 제공
+* hash(딕셔너리, 맵): 하나의 키에 여러개 데이터, field-value 형태
+  * 저장은 hset 키이름 field와 value 나열
+  * 여러 개의 field를 한꺼번에 삽입할 때는 hmset
+  * 가져올 때는 hget, hmget
+  * 모든 데이터 조회 hgetall
+* 전체 필드 조회하는 hkeys (키), 전체 value 조회하는 hvals (키)
+
+* 외부에서 접속 가능하도록 할 때는 컨테이너 안에 /data 디렉토리를 생성하고 redis.conf 파일을 작성
+  * bind 옵션에 0.0.0.0 작성하면 외부에서 접속이 가능
+* RDB 백업 시 redis.conf파일에 save 시간 데이터개수를 설정하면 시간 단위로 데이터 개수만큼 변경되었을 때 rdb파일에 데이터를 백업
+* AOF로 백업 시 redis.conf파일에 save 옵션을 만들고 appendonly yes를 추가
+  * rdb 파일이나 aof 파일은 redis만 읽을 수 있음
+  * disk 데이터베이스에 백업을 할 때는 프로그램을 직접 만들어서 수행
+  * docker에서 작업 시 redis.conf 파일을 외부에서 만든 후 도커 볼륨을 이용해서 파일을 복사해줘야
+* 일반 웹 프로그래밍에서 redis를 사용하고자 하는 경우 대부분 세션 관리에 이용
+  * 접속한 클라이언트의 정보를 서버에 저장 - 로그인확인이나 장바구니
+  * 최근에는 웹 서버에서 세션 저장 시 웹 서버에 직접 저장 않고 데이터베이스를 이용하는 것을 권장, 세션이 많아지면 웹서버의 메모리 이용하기 때문에 느려짐
+  * 세션은 빠르게 확인할 필요가 있는데 DB는 너무 느림->메모리 DB 사용 권장
+
 
 ## 참고
 ### TCP/IP
