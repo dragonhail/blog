@@ -27,16 +27,41 @@ sidebar:
 * 백업 기능 제공 - 디스크에 저장 가능
 * 싱글스레드 기반->이벤트 큐를 이용해 싱글스레드 구현
 * 백업 방법
- * RDB 방식: 스냅샷(데이터 전체의 복사본) 이용
-  * 간단-복원할 때 스냅샷만 복사해서 붙여넣으면 됨
-  * 단점-스냅샷 이후의 변경 데이터는 복원 불가
- * AOF(Append Only File)
-  * 변경된 작업을 저장해서 복원
-  * 장점-복원 시 데이터 유실량 거의 없음
-  * 단점-용량이 커지고 시간 오래 걸림
+  * RDB 방식: 스냅샷(데이터 전체의 복사본) 이용
+    * 간단-복원할 때 스냅샷만 복사해서 붙여넣으면 됨
+    * 단점-스냅샷 이후의 변경 데이터는 복원 불가
+  * AOF(Append Only File)
+    * 변경된 작업을 저장해서 복원
+    * 장점-복원 시 데이터 유실량 거의 없음
+    * 단점-용량이 커지고 시간 오래 걸림
 * 실제 구현을 할 때는 Master와 Replica 서버를 만들어서 Master에 작업을 수행하고 Master에 변경이 생기면 Replica서버에 복제하는 방식으로 구현
 * Master에 장애가 발생하면 Replica 서버가 Master가 되도록 해서 장애에 대비
 * 센티넬이 마스터-클라이언트 중계
+
+### docker로 REDIS 설치
+```bash
+docker pull redis
+docker images
+docker run -p 6379:6379 redis //컨테이너 실행
+docke run --name myredis -d -p 6379:6379 redis //컨테이너 이름설정 및 백그라운드로 컨테이너 실행
+docker exec -it redis /bin/bash //docker컨테이너 내부 접속
+redis-cli //redis cli접속
+```
+* REDIS는 메모리 사용하기 때문, 무한정 메모리 보관X
+* 데이터 생성 유효기간 설정가능
+```bash
+EXPIRE 키 유효시간(초단위)
+```
+
+### redis 명령
+* 문자열저장
+```bash
+set (key) (value)
+get (key)
+del (key)
+lpush (key) (value)
+rpush (key) (value)
+```
 
 ## 참고
 ### TCP/IP
