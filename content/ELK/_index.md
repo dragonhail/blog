@@ -1,7 +1,7 @@
 ---
-title: CS기본지식
-linkTitle: CS기본
-weight: 1
+title: ELK
+linkTitle: ELK
+weight: 4
 layout: wide
 cascade:
   type: docs

@@ -1,6 +1,7 @@
 ---
 title: 카프카
 linkTitle: 카프카
+weight: 3
 layout: wide
 cascade:
   type: docs
