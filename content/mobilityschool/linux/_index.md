@@ -132,3 +132,89 @@ echo $PATH
   * passwd: 비밀번호 변경
   * exit: 현재사용중인 SHELL종료, 로그인SHELL에서 다른SHELL 실행한 경우는 이전에 실행한 SHELL로 이동
   * clear: 현재 화면 삭제 - CTRL + l
+
+### SSH
+```shell
+sudo apt-get update
+sudo apt-get install openssh-server
+sudo systemctl status ssh
+sudo ufw allow ssh
+```
+
+* 패키지관리자 - central repository의 프로그램/패키지 저장 위한 db <br>
+->접속하면 로컬에 DB 가져옴 <br>
+->프로그램 업데이트 시 로컬도 업데이트 시켜야->apt-get update <br>
+* sudo->관리자 권한
+* firewall: inbound제어 못들어오게
+
+* proxy서버: outbound제어
+* 유저에 관리자 권한이 없으면 위의 명령이 수행안될 수 있음
+```shell
+sudo usermod -aG sudo 계정명  # 계정 관리자 권한 설정
+```
+
+### 포트포워딩
+* 내부의 IP와 외부IP를 매핑해서 내부에서 사설 IP를 사용하지만 외부 IP를 이용해서 인터넷을 할 수 있도록 해주고 외부에서는 설정한 외부IP를 이용해 내부IP를 가진 컴퓨터에 접근할 수 있도록 해줌
+* 리눅스에서 사설 IP 조회, 터미널 실행시켜 hostname -i 명령 수행 (ifconfig 명령은 net-tools 설치해야) (Default 주소는 10.0.2.15)
+* 터미널이 실행이 안될 때는 [설정] - [Region & Language] 에서 캐나다로 변경하고 로그아웃 후 다시 로그인
+* 윈도우즈에서 공인 IP 조회: ipconfig /all<br>
+실제 사용하는 어댑터의 IP주소 확인 (인터넷 어댑터 이더넷 2)
+* virtual box의 [머신] - [설정] - [고급] - [포트포워딩] 선택 후 룰 추가<br>
+포트번호: 22, 호스트IP: 윈도우즈IP, 게스트IP: 리눅스사설IP, 포트번호: 22
+* ssh 계정@호스트IP -p 포트번호 으로 접속
+* 리눅스 계정 전환
+```shell
+sudo # 일시적으로 관리자 권한 부여 superuser do
+sudo su
+su root
+su -root # 관리자로 전환
+su [계정명] # 특정계정으로 전환
+```
+
+### alias
+* 별칭 부여
+```shell
+alias 별명 = '설정값'
+unalias # 별명 해제
+```
+* 어떤 명령이 별명인지 확인하고자 할 때는 type 명령을 입력했을 때 명령이라면 명령 위치 출력, 별명이라면 원본 위치 출력
+* ex
+```shell
+alias ls='ls -F' # alias 설정
+unalias ls # 해제
+```
+* type ls: 별명이라서 명령의 위치가 나오지 않고 별명이라고 출력
+* type cp: 별명이 아니라서실제 위치가 출력
+  
+### 별명이 설정되어 있을 때 원본 명령어를 실행
+* 전체 경로로 명령어를 입력(명령어 위치를 whereis나 which 사용)
+* command 명령어나 \명령어를 입력
+
+### 날짜 및 시간 명령
+* date: 시스템에서 설정되어 있는 현재 시각과 날짜를 출력
+* timedatectl: 하드웨어 및 소프트웨어에 설정된 모든 시간과 날짜를 출력
+
+### 시스템 사용자 정보
+* logname: 로그인네임
+* users: 접속한 사용자 이름
+* who: 로그인 한 모든 사용자 계정
+* whoami: 현재 사용자
+
+### 시스템 정보 확인
+* uname [옵션] <br>
+-a: 시스템의 모든 정보 확인<br>
+-m: 시스템이 사용 중인 하드웨어 정보 확인<br>
+-n: 호스트 네임 확인 - 컴퓨터 이름<br>
+-r: 운영체제 릴리즈 번호<br>
+-s: 운영체제 이름 <br>
+-v: 버전 출시 일자 <br>
+* hostname: 현재 사용중인 컴퓨터 이름, 옵션 이용해 IP 확인가능
+* arch: CPU 정보
+* env: 환경변수 확인
+
+### sudo와 su
+* sudo: 일시적으로 관리자 권한으로 실행<br>
+패키지 관련 명령이나 환경설정파일 수정할 때 관리자 권한 요청
+* su - 계정: 현재 계정의 환경변수 유지하면서 다른 계정으로 전환
+* sudo su - 계정: 다른 사용자의 계정으로 전환할 때 환경변수도 전환
+* su: *관리자 계정*으로 전환
