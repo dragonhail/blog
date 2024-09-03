@@ -1,6 +1,6 @@
 ---
-title: Redis
-linkTitle: Redis
+title: REDIS
+linkTitle: REDIS
 weight: 3
 layout: wide
 cascade:
