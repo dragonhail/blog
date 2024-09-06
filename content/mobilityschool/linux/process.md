@@ -455,3 +455,171 @@ sh test.sh
 ### 파라미터 설정
 - 실행할 때 같이 넘겨주는 데이터
 - 파라미터를 사용할 때는 $파라미터위치
+- $0은 파일명
+```bash
+  vi param.sh
+  1 #! /bin/sh$
+  2 echo "$0 $1 $2"$
+  3 echo "$2"$
+
+  chmod 775 param.sh
+```
+
+### 제어문
+#### if
+```bash
+if [ 표현식 ]
+then
+    참일 때 수행할 내용
+else
+    거짓일 때 수행할 내용
+fi
+```
+```bash
+파일 경로 조건
+  -d 파일경로: 디렉터리이면 참
+  -e 파일경로: 존재하면 참
+  -f 파일경로: 일반 파일이면 참
+  -g 파일경로: setGID가 설정되면 참
+  -r 파일경로: 읽기 가능이면참
+  -s 파일경로: 크기가 0이 아니면 참
+  -u 파일경로: setUID가 설정되면 참
+  -w 파일경로: 쓰기 가능이면 참
+  -x 파일경로: 실행 가능이면 참d
+```
+
+- /lib/systemd/system/cron.service 라는 파일의 존재 여부를 확인해서 존재하면 존재한다고 않다고 메시지 출력
+
+```bash
+  1 #! /bin/sh
+  2 if [ -f /lib/systemd/system/cron.service ]
+  3 then
+  4   echo Hello World
+  5 else
+  6   "No FILE"
+  7 fi
+```
+
+#### case - esac
+- 값으로 분기
+- 형식
+  ```bash
+  case 데이터 in
+        값)
+            값일 때 수행할 내용
+        값)
+            값일 때 수행할 내용
+        *)  
+            나머지 경우 수행할 내용
+  esac
+  ```
+  - case 구문에 각 값 안에서 여러 개의 실행문을 작성할 수 있기 때문에 내용을 작성할 때 마지막에 ;; 를 추가해줘야함
+  - 여러 개의 값에 동일한 내용을 수행하고자 하는 경우는 ```값 | 값``` 형태로 작성
+```bash
+#! /bin/sh
+
+case "$1" in
+s | S | start)
+  echo "HI";;
+e)
+  echo "E";;
+*)
+  echo "NO OHTER";;
+esac
+```
+
+#### and, or
+- and - &&, -a
+- or - ||, -o
+- `if [조건] && [조건]` 의 형태로 입력
+- lib/systemd/system/cron.service 가 있고 홈 디렉터리에 if.sh파일이 있다면 성공 그렇지 않다면 실패라고 출력
+  ```bash
+  #! /bin/sh
+  if [ -f /lib/systemd/system/cron.service ] && [ -f ~/if.sh ]
+  then
+      echo "success"
+  else
+      echo "fail"
+  fi
+  ```
+#### for ~ in
+- 형식
+  ```bash
+  for 임시변수 in 데이터나열
+  do
+      데이터를 임시변수에 하나씩 대입하고 수행할 문장
+  done
+  ```
+  ```bash
+  for i in 1 2 3 4 5
+  do
+      hap=`expr $hap + $i`
+  done
+  echo $hap
+  ```
+- 현대 디렉터리의 모든 txt 파일을 읽어서 내용을 출력
+  ```bash
+  for fname in $(ls *.txt)
+  do
+      cat $fname
+  done
+
+#### while
+- 표현식이 거짓이 될 때까지 반복
+- 형식
+  ```bash
+  while [표현식]
+  do
+      표현식이 거짓이 아니면 수행할 내용
+  done
+  ```
+- 1부터 5까지의 합
+  ```bash
+  hap=0
+  i=1
+  while [ $i -le 5 ]
+  do
+      hap=`expr $hap + $i`
+      i=`expr $i + 1`
+  done
+  echo "Total: $hap"
+  ```
+#### 기타 제어문
+- break, for 나 while을 강제로 중단하고자 할 때 사용
+- until: 반복문
+- continue: for나 while의 시작 부분으로 이동
+- exit: 프로그램 완전히 종료, 상위 프로세스에게 넘겨줄 정수를 같이 사용 `exit 0`
+- return: 함수를 호출한 곳으로 돌아가는 제어 명령
+
+### Function
+- 자주 사용하는 구문을 묶어서 하나의 이름으로 사용하는 것
+- 메모리를 별도로 할당 받아서 사용
+
+#### 생성
+```bash
+이름(매개변수 나열){
+    함수 내용
+    return
+}
+```
+
+#### 호출
+- `함수이름(매개변수)`
+- 매개변수가 없는 경우 이름만으로 호출 가능
+  
+```bash
+myfunc () {
+  echo "My Function"
+  return
+}
+myfunc
+exit 0
+```
+
+#### eval
+- 문자열을 명령으로 수행
+- 파이썬이나 자바스크립트에서 이 함수가 문자열을 데이터로 치환
+  ```bash
+  ls -l
+  eval "ls -l"
+  ```
