@@ -3,7 +3,7 @@ layout: wide
 cascade:
   type: docs
 sidebar:
-  open: true
+  open: false
 ---
 
 {{< cards >}}
