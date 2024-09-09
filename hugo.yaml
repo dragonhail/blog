@@ -19,12 +19,18 @@ markup:
 
 menu:
   main:
-    - name: Search
+    - name: CS기본
       weight: 1
+      pageRef: /cs
+    - name: 모빌리티SW스쿨
+      weight: 2
+      pageRef: /mobilityschool
+    - name: Search
+      weight: 3
       params:
         type: search
     - name: GitHub
-      weight: 2
+      weight: 4
       url: "https://github.com/dragonhail/"
       params:
         icon: github

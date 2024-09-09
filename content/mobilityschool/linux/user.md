@@ -18,6 +18,7 @@ sidebar:
   - 로그인ID:x:UID:GID:설명:홈디렉터리:로그인쉘
   - x는 예전에 비밀번호 저장하던 영역인데 호환성 문제 때문에 남아있음
   - UID는 사용자를 구분하기 위한 번호로 일반적으로 0~9999 번과 65534는 시스템 사용자를 위한 UID로 예약되어 있고 일반 사용자는 1000번 부터 할당
+    - UID가 똑같은 계정은 같은 /home 디렉터리에서 작업
   - root가 0번, 시스템 데몬이 1, 명령어를 위한 관리 계정이 2
   - GID는 사용자가 속한 그룹의 ID로 사용자를 등록할 때 정해지고 특별히 소속 그룹을 지정하지 않는 경우 로그인 ID가 그룹으로 등록
   - 그룹에 대한 정보는 /etc/group 에 저장
@@ -199,10 +200,172 @@ dh@dh:~$ sudo usermod -u 3003 user2
 dh@dh:~$ cat /etc/passwd | grep user2
 user2:x:3003:1000::/home/user2:/bin/bash
 ```
-###
+### 계정 변경
 - 기존의 값을 확인 `sudo cat /etc/shadow | grep user3`
 - 변경: `sudo usermod -f 10 -e 2024-12-31 user3`
 ```bash
 dh@dh:~$ sudo cat /etc/shadow | grep user3
 user3:$y$j9T$TDKiiNpxhl096xX71cg0W1$k1dnZsYuMuXn4mchUNSqZtRl6f7OCi1NztcQExFQqIC:19975:0:99999:7:10:20088:
 ```
+
+### 계정 삭제
+- 형식
+  - `userdel [옵션] [로그인ID]`
+  - 옵션
+  ```
+  r: 홈 디렉터리까지 삭제
+  f: 로그인 중이어도 강제 삭제
+  ```
+
+### 사용자 계정 명령 실습
+- useradd 명령으로 test01, test02 계정을 생성: 비밀번호 설정 없이 계정을 생성(원격 접속 불가)하고 계정이 생성될 때 수행하는 기본 작업을 보여주지 않음
+```
+로그인ID    로그인쉘        UID     2차그룹     성명
+test01      sh(본 쉘)      2100     3           test01.user
+test02      bash           2200     4           test02.user
+=>
+sudo useradd -m -u 2100 -G 3 -s /bin/sh -c "test01 user" test01
+sudo useradd -m -u 2200 -G 4 -s /bin/bash -c "test02 user" test02
+```
+- adduser 명령으로 test03 계정을 생성: 초기 설정 과정이 화면에 출력되고 비밀번호 설정 메시지가 제공됨
+```
+로그인ID    로그인쉘        UID       성명
+test03      sh(본 쉘)      2300      test03.user
+=>
+sudo adduser --uid 2300 --shell /bin/bash --gecos "test03 user" test03
+```
+- 패스워드 에이징(유효 기간 수정)
+  -  chage 명령으로 수행
+```
+- 항목 MIN(m) MAX(M) WARNING(W) INACTIVE(I) EXPIRE(E)
+      4       200   10          5           2024-12-09
+```
+```bash
+dh@dh:~$ sudo chage -m 4 -M 200 -W 10 -I 5 -E 2024-12-09 test01
+dh@dh:~$ sudo cat /etc/shadow | grep test01
+test01:!:19975:4:200:10:5:20066:
+```
+- test03 계정의 UID를 2010으로 계정의 이름을 test33으로 수정
+- usermod 명령을 이용
+- uid를 u 옵션을 이용
+- 계정의 이름 변경은 l 옵션 사용
+```bash
+dh@dh:~$ sudo usermod -u 2010 -l test33 test03
+dh@dh:~$ sudo cat /etc/passwd | grep test03
+test33:x:2010:1001:,,,:/home/test03:/bin/bash
+```
+
+- test02 계정을 삭제 - 사용자의 홈 디렉터리까지 삭제
+- `sudo userdel -r test02`
+- public cloud에서 IaaS로 머신을 제공할 때 계정을 추가할 수 있도록 하는데 이 경우 계정만 추가하도록 해주는 경우도 있고 /home 디렉터리를 만들어주는 경우도 있음, /home 디렉터리가 필요없는 경우 UID만 같게 하면 같은 /home 디렉터리에서 작업 가능
+
+## 그룹 관리 명령
+- 리눅스는 모든 유저가 하나 이상의 그룹에 속하도록 함
+- 시스템을 사용하는 사용자가 많아지면 업무나 기능에 따라 사용자들을 적절히 나누고 권한을 조정해야 함
+- 관련 명령은 `groupadd, addgroup, groupmod, groupdel`
+
+### 그룹 생성
+- groupadd
+  - `groupadd [옵션] [그룹이름]`
+  - 옵션
+    - `g: 그룹아이디`
+    - `o: 그룹아이디 중복 허용`
+    - 옵션 없이 생성하면 마지막에 생성된 그룹 아이디 다음 번호로 그룹 아이디를 설정해서 생성
+  - 옵션 없이 그룹 생성 `sudo groupadd gtest01`
+  - 그룹 아이디를 직접 설정 `sudo groupadd -g 3000 gtest02`
+```bash
+dh@dh:~$ sudo groupadd -g 3000 gtest02
+[sudo] password for dh: 
+dh@dh:~$ sudo cat /etc/group | grep gtest02
+gtest02:x:3000:
+
+dh@dh:~$ sudo groupadd -o -g 3000 gtest03
+dh@dh:~$ sudo tail /etc/group
+nm-openvpn:x:122:
+lxd:x:123:
+gamemode:x:986:
+gnome-initial-setup:x:985:
+dh:x:1000:
+plocate:x:124:
+test01:x:2100:
+test03:x:1001:
+gtest02:x:3000:
+gtest03:x:3000:
+```
+- addgroup 명령으로 생성 가능한데 이 때는 옵션이 --gid
+`sudo addgroup --gid 3001 gtest04`
+
+### 그룹수정
+- groupmod [옵션] [그룹아이디]
+- -g 옵션을 이용해 그룹 아이디를 변경하는 것이 가능
+- -n 옵션을 이용해 그룹 이름을 변경하는 것이 가능
+- `sudo groupmod -g 2500 -n gtest05 gtest04`
+
+### 그룹삭제
+- groupdel
+`sudo groupdel gtest05`
+
+### 그룹 암호 설정 및 사용
+- `gpasswd [옵션] [그룹이름]`
+- 옵션
+  ```
+  a: 사용자 계정을 그룹에 추가
+  d: 사용자 계정을 그룹에서 삭제
+  r: 그룹 암호를 삭제
+  옵션이 없으면 암호 설정
+  ```
+- 그룹에 멤버 추가 `sudo gpasswd -a test01 gtest02`
+- 그룹에서 멤버 삭제 `sudo gpasswd -d test01 gtest02`
+- 그룹 암호 설정 `sudo gpasswd gtest02`
+
+- 암호를 설정하는 이유는 한 명의 유저가 서로 다른 2개 이상의 그룹에 소속된 경우 그룹을 변경하고자 할 때 사용
+이 때 사용하는 명령은 `newgrp [그룹이름]`
+
+## 사용자 정보 관리 명령
+### UID와 EUID
+- UID(RUID): 사용자가 로그인 할 때 사용한 계정의 UID
+- EUID: 현재 명령을 수행하는 주체의 UID
+- 대부분의 경우는 UID와 EUID가 일치하지만 달라지는 경우
+  - 실행 파일에 setuid가 설정된 경우
+  - su 명령을 이용해서 계정을 변경한 경우
+
+### who와 w
+- `who`: 현재 로그인한 사용자 정보를 출력
+  - 옵션을 설정하면 일부 정보만 확인 가능
+- `w` 명령은 현재 시스템에 로그인 한 사용자의 정보 외에 사용자가 현재 실행 중인 작업에 대한 정보를 출력
+  - 옵션에 사용자 이름을 설정하면 사용자 이름에 해당하는 작업만 출력
+- `last` 명령을 이용하면 시스템에 로그인하고 로그아웃 정보를 출력
+
+### UID와 EUID 확인
+- 현재 사용 중인 유저 확인(EUID 출력): `whoami`
+- 로그인한 유저 확인(RUID 또는 UID 출력): `who am i`
+- 아이디 확인: `id`
+- 소속 그룹 확인: `groups [유저아이디]`
+- 유저아이디를 생략하면 현재 사용자 계정이 속한 그룹
+
+### 권한 수정
+- 다른 계정으로 전환해서 권한을 사용
+  - 대표적인 su 명령으로 root 계정으로 전환해서 기능 사용
+  - root 계정으로 전환해서 권한을 사용하는 것은 위험한데 이는 시스템 관리 권한을 갖기 때문
+- 계정 별로 특정한 작업을 수행할 수 있도록 권한을 부여
+  - sudo 명령으로 root 권한을 실행하려면 특정 권한을 부여받아야 하는데 이 권한은 /etc/sudoers 파일에 설정
+  - 사용자계정 호스트=명령어 형태로 설정
+  - sudoers 파일은 기본적으로 읽기 전용이므로 수정을 하고자 하면 `sudo chmod` 명령으로 w 권한을 설정하고 해야 함
+  ```
+  root ALL=(ALL) ALL
+  ```
+  - user2에게 유저를 생성하고 유저를 수정하는 권한을 갖도록 수정
+  ```
+  user2 ALL=/usr/sbin/useradd, /usr/sbin/usermod
+  ```
+
+  - ex
+  ```
+  dh@dh:~$ sudo chmod 640 /etc/sudoers
+  dh@dh:~$ sudo vi /etc/sudoers
+  user2 ALL=/usr/sbin/useradd, /usr/sbin/usermod
+  dh@dh:~$ su - user2
+  dh@dh:~$ sudo useradd john
+  => john 추가 가능
+  ```
+  - 처음 로그인 한 유저가 관리자 명령 실행 권한이 없어서 명령을 수행 못하는 경우 위처럼 sudoers 파일을 수정해서 해도 되고 su 를 이용해서 관리자로 로그인 하고 `usermod -aG sudo 계정`으로 계정에 모든 관리자 명령을 수행할 수 있도록 수정하기도 함
