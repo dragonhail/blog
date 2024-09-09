@@ -1,7 +1,7 @@
 ---
 title: 프로세스
 linkTitle: 프로세스
-weight: 
+weight: 1
 layout: wide
 cascade:
   type: docs
