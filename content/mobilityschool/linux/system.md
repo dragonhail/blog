@@ -360,3 +360,65 @@ ufw allow 6389/tcp
   - mysql 설정 파일을 열어서 bind-address를 접속할 클라이언트의 IP나 0.0.0.0으로 수정
   - 되도록이면 root 유저를 직접 접속하도록 하는 것보다는 새로운 유저를 생성을 해서 외부 접속 권한을 부여하고 접속하는 것이 좋음
   - mariadb 버전이 최신 버전이면 접속할 때 암호화 때문에 비밀번호가 틀렸다고 할 수 있음
+
+## 방화벽
+- 외부에서 접근하는 트래픽을 제어하기 위한 소프트웨어가 방화벽
+- 내부에서 외부로 나가는 트래픽을 제어하기 위한 소프트웨어는 proxy
+  - 자바스크립트는 브라우져 내부에서만 동작하기 때문에 브라우져 외부의 데이터에 접근 못함
+  - 자바스크립트를 이용해 외부 데이터 가져올려면 프록시 서버를 이용
+
+### 방화벽 상태 확인 - 패키지와 서비스 이름이 ufw
+- 설치되어 있는지 확인 `dpkg -l | grep ufw`
+- 서비스 상태 확인 `systemctl status ufw`
+- 방화벽 시작 `sudo ufw enable`
+- 방화벽 종료 `sudo ufw disable`
+
+### 관련 명령
+- ufw 서브명령
+  ```
+  enale
+  disale
+  default all | deny | reject [incoming | outgoing] : 기본 동작 설정
+  status [verbose] : 방화벽의 상태 출력
+  allow 서비스 | 포트/프로토콜 : 허용
+  deny 서비스 | 포트/프로토콜 : 거부
+  delete 명령 : 명령으로 설정한 규칙을 삭제
+  ```
+- 웹 서버를 구동해서 외부에서 접근이 가능하도록 방화벽을 설정
+  - `sudo ufw allow http(80/tcp)`
+  - `sudo ufw allow https(443/tcp)`
+- telnet(23 - tcp) 접속을 거부하도록 방화벽을 설정 `sudo ufw deny telnet`
+- telnet 거부 규칙을 제거 `sudo ufw delete deny telnet`
+- 포트를 직접 설정할 때는 tcp나 udp 같은 *프로토콜*을 같이 기재
+- 특정 IP 를 가진 곳에만 적용
+  - ftp 서비스에 192.168.200.207만 접속이 가능하도록 설정
+  - `sudo ufw allow from 192.168.200.207 to any port ftp`
+
+### 데이터베이스 (mariadb, mysql) 서버 외부에 접속 가능하도록 하기
+- 방화벽에 데이터베이스 서버 애플리케이션의 포트를 허용
+  - `sudo ufw allow 3306/tcp`
+  - `sudo ufw allow 3306/udp`
+- 데이터베이스 애플리케이션들은 로컬 호스트에 접속하도록 되어있는데 이 부분을 외부에서 접근이 가능하도록 수정
+  - 127.0.0.1로 되엉 있는 부분은 0.0.0.0이나 접속하고자 하는 컴퓨터의 IP로 수정
+- MySQL의 경우는 각 유저별로 접속할 수 있는 IP 대역과 데이터베이스를 설정해주어야 함
+- 루트비밀번호 설정 `sudo mysqladmin -u root password '비밀번호'`
+- `grant all on *.* to 'root'@'%' identified by '00000000';`
+- 접속 `mysql -u root -p`
+- 유저가 사용할 수 있는 IP대역과 데이터베이스 설정
+  ```
+  use mysql;
+  grant all on 데이터베이스이름 to '유저명'@'IP' identified by '비밀번호';
+  flush privileges;
+  ```
+- virtualbox에서는 포트포워딩을 해줘야 함
+
+## 웹서버
+- 웹 브라우저에서 DOMAIN이나 IP 주소를 가지고 접속할 수 있도록 해주는 서버
+- 리눅스나 윈도우즈는 기본적으로 웹 서버 기능을 제공
+- 기본적인 웹서버는 html만 서비스가 가능
+- 대부분의 경우는 WAS(Web Application Server - Web Server + Application Server)를 이용해서 서비스를 제공
+
+### 설정
+- `sudo apt install apache2`
+- `systemctl status apache2`
+- 기본 디렉터리: /var/www/html
