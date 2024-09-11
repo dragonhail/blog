@@ -297,13 +297,61 @@ print(y)
 ```python
 def cal(operator, x, y):
     if operator == '+':
-            return x+y
+        return x+y
     elif operator == '*':
-            return x*y
+        return x*y
     elif operator =='-':
-            return x-y
+        return x-y
     elif operator =='/':
-            return x/y
+        return x/y
     else:
-            return "잘못된 데이터 입력"
+        return "잘못된 데이터 입력"
+
+def cal(operator, x, y):
+    return{
+        '+': lamda: x+y,
+        '-': lamda: x-y,
+    }.get(operator, lambda:"잘못된 연산자입니다")
+    
+result = cal('+', 10, 20)
+print result
+
+def cal(operator, x, y):
+    match operator:
+        case '+':
+            return x + y
+        case '-':
+            return x - y
+        case _:
+            return "잘못된 연산자입니다"
+result = cal('+', 10, 20)
+print(result)
+```
+
+### while
+- 표현식이 True 인 동안 내부 출력을 반복하는 제어문
+```python
+while 표현식:
+    수행할 내용
+```
+
+### for
+- Sequence 를 순회하는 역할
+- \_\_iter__ 가 구현된 객체가 sequence
+- 형식
+  ```python
+  for 임시변수 in sequence객체:
+    수행할 내용
+  ```
+- sequence객체의 각 요소가 임시 변수에 대입되어 실행
+- 임시변수를 사용하지 않을 거라면 _로 임시변수를 대신할 수 있음
+```python
+name = "adam"
+li = [100,200,300]
+person = ("adam", "singer", 45)
+su = 30
+
+# 문자열은 글자 단위로 분할
+for ch in name:
+    print(ch)
 ```
