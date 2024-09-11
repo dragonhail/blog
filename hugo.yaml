@@ -57,7 +57,7 @@ params:
     displayToggle: true
 
   footer:
-    enable: false
+    enable: true
     displayCopyright: true
     displayPoweredBy: true
     width: normal
