@@ -1,13 +1,12 @@
 ---
-title: 1주차-DML
-linkTitle: 1주차-DML
+title: DML
+linkTitle: -DML
 weight: 3
 layout: wide
 cascade:
   type: docs
 sidebar:
   open: true
-prev: /mobilityschool/mariadb/1주차-정규화제약조건
 ---
 
 08/29

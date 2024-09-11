@@ -24,7 +24,7 @@ menu:
       pageRef: /cs
     - name: 모빌리티SW스쿨
       weight: 2
-      pageRef: /mobilityschool/mariadb/1주차.md
+      pageRef: /mobilityschool/mariadb/기초/
     - name: Search
       weight: 3
       params:

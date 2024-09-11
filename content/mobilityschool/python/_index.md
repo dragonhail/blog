@@ -355,3 +355,16 @@ su = 30
 for ch in name:
     print(ch)
 ```
+
+### while과 for 에 else 추가
+- while과 for 뒤에 else를 추가할 수 있는데 이 경우는 반복문을 전부 수행한 경우 마지막에 수행하고 싶은 내용을 else에 기재하면 됨
+```python
+i = 0
+while i<10:
+    print(i)
+    i+=1
+    if i % 11 == 0:
+        break
+# for나 while 뒤에 else 를 추가하면 반복문을 전부 수행한 경우에만 호출됨
+    else:
+        print("정상적으로 반복문 수행했습니다")
