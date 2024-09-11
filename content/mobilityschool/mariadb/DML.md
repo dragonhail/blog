@@ -1,6 +1,6 @@
 ---
 title: DML
-linkTitle: -DML
+linkTitle: DML
 weight: 3
 layout: wide
 cascade:
