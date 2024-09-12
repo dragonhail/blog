@@ -1,7 +1,7 @@
 ---
 title: Python
 linkTitle: Python
-weight: 6
+weight: 1
 cascade:
   type: docs
 sidebar:
