@@ -213,3 +213,106 @@ print(td.days, td.seconds)
 - os.path 패키지: 경로와 관련된 패키지
   - 이 패키지의 메서드들은 경로가 없는 경우 예외를 발생시킴
   - 파일의 존재 여부 그리고 최근 변경 시간 그리고 파일의 크기를 알아내는 메서드를 활용하는 것에 대해서 알아 둘 필요가 있음
+```python
+import os.path
+import glob
+import os
+
+print(dir(os.path))
+
+# 파이썬에서는 디렉터리 경로를 /로 설정해도 됨
+print(os.path.getatime("./mymodule.py"))
+print(os.path.getmtime("./mymodule.py"))
+print(glob.glob("./"))
+import(os.listdir("./"))
+# glob는 확장자 패턴을 이용하게 되는데 보통 *이나 ?와 같이 사용
+# Mac이나 Linux 면 디렉터리 기호가 / 이고 windows이면 \\
+print(glob.glob("./*.py"))
+```
+- glob패키지: 디렉터리 내부의 파일이나 디렉터리를 순회하기 위한 패키지
+  - 자연어 처리나 이미지 처리를 할 때 여러 개의 파일을 하나의 디렉터리로 압축해서 제공한 경우 이 패키지를 이용해서 데이터를 읽어내는 경우가 있음
+
+### 운영체제 관련 패키지
+- os: 운영체제 관련 패키지
+  - 디렉터리 생성이나 순회 및 현재 디렉터리 확인 등에 사용
+  - system 함수를 이용해서 명령을 실행하는 것이 가능
+  - 환경 변수 확인 가능
+```python
+import os
+import sys
+
+print(dir(sys))
+print(sys.modules)
+print(f"환경변수:(os.environ)")
+os.system("dir")
+print("모듈 찾는 순서: ", sys.path)
+print("디폴트 인코딩:", sys.getdefaultencoding)
+print("참조 카운트: ", sys.getrefcount("객체"))
+# 운영체제 명령어
+os.system("dir")
+```
+- sys: 파이썬과 관련된 정보
+
+### 복사
+- 참조형 데이터의 복사 방법은 2가지: 얕은 복사와 깊은 복사
+- 파이썬에서 리터럴 데이터를 가리키는 변수를 만들면 먼저 상수 영역에서 리터럴이 존재하는지 확인하고 존재하면 그 id를 변수에 대입하고 존재하지 않으면 상수 영역에 저장한 후 id를 변수에 대입. 동일한 리터럴을 저장하면 참조하고 있는 id가 동일
+- 참조형 데이터를 = 를 이용해서 대입하면 실제 참조하고 있는 내용은 복제되지 않고 id가 대입됨
+  - 이 때 참조하고 있는 데이터의 참조 카운트(reference count만 하나 증가함)
+  - 이 경우 참조를 대입받은 변수를 이용해서 내부 데이터를 수정하면 참조하고 있는 데이터에 수정이 발생
+  - 이런 경우는 함수 내에서 만들어진 데이터를 함수 외부에서 사용하기 위해서 수행
+```python
+b = 0
+def f():
+    a = 10
+    global b
+    # 참조형 데이터끼리 = 를 이용하는 경우는 지역 변수를 외부에서 사용하고자 할 때
+    b = a
+f()
+print(b)
+
+li1 = [10, 20]
+li2 = li1
+li2[0] = 1234 # li2를 이용해 li1을 수정하는 것은 좋지 않음
+print(li1[0])
+```
+- 얕은 복사(weak copy)
+  - 파이썬에서는 copy 모듈의 copy라는 함수를 이용하면 얕은 복사를 수행할 수 있음
+  - 얕은 복사는 참조형 데이터 자체를 복제해서 제공하는 것, 재귀적으로 복제를 하지는 않음
+  - 벡터 데이터 안에 벡터 데이터를 가지는 경우는 완전한 복제가 이루어지지 않음
+```python
+import copy
+
+li1 = [1,2,3,4]
+li2 = copy.copy(li1)
+li2[0] = 1000
+
+print(li1, li2)
+
+li3 = [[10, 20], [30, 40]]
+# 재귀적으로 복제하지 않기 때문에 이 경우는 li4를 이용해서 li3의 데이터를 수정하는 것이 가능
+li4 = copy.copy(li3)
+# li4 = copy.deepcopy(li3)
+li4[0][0] = 1234
+print(li3, li4)
+```
+- 깊은 복사(deep copy)
+- `copy.deepcopy` 함수를 이용하면 재귀적으로 복제를 수행
+- GUI 프로그래밍에서는 화면을 만드는 부분과 코딩을 하는 부분이 별도로 분리된 경우가 있는데 이 경우 참조를 복사해서 reference count만 증가시키는 것이나 얕은 복사를 이용하는 경우가 있음. iOS Framework나 Visual Studio를 이용한 C#이나 VC++에서 이러한 기법을 이용
+
+### 약한 참조
+- 파이썬은 = 를 이용해서 대입하면 참조 카운트를 증가시키고 id를 복사함. 이렇게 하면 메모리 정리를 하려면 참조 카운트를 0을 만들기 위해서 여러 번 None을 대입해야 함.
+- `weakref.ref(객체)`를 이용하면 참조 카운트를 증가시키지 않고 id를 복사함 여러 번 참조를 복사했더라도 한 번만 None을 대입하면 메모리 정리가 됨
+```python
+import weakref
+
+class Temp:
+    def __del__(self):
+        print("인스턴스가 파괴됨")
+
+obj1 = Temp()
+
+# 참조 카운트를 증가시키지 않고 참조를 복사
+obj2 = weakref.ref(obj1)
+obj1 = None
+print("프로그램 종료")
+```
