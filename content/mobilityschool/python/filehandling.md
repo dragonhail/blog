@@ -169,3 +169,38 @@ with open('./test.txt', 'rb') as f:
 - zip은 `zipfile`이라는 모듈의 `ZipFile`이라는 함수를 이용해서 객체를 생성하고 `write`함수로 압축
   - 압축해서는 `extractall` 함수를 이용
   - 리눅스 압축 표준은 tar라는 `tafile`이라는 모듈의 `open`함수를 이용해서 객체를 만들고 `add`를 이용해 압축 수행, `extractall` 함수를 이용해 압축 해제
+```python
+import zipfile
+
+with zipfile.ZipFile("test.zip", "w") as myzip:
+    # 압축할 파일 경로
+    filelist = ["data.csv", "test.bin", "test.txt"]
+    for imsi in filelist:
+        myzip.write(imsi)
+
+zipfile.ZipFile("./test.zip").extractall()
+```
+### 로그 파일 읽기
+- Tomcat의 로그 파일 형식
+- 208.100.26.232 - - [15/Nov/2015:10:45:11 +0000] "GET / HTTP/1.0" 404 2051
+- 첫번째 항목은 접속한 컴퓨터IP
+- 마지막 항목은 트래픽
+- 저 파일의 내용을 읽어서 트래픽의 합계 구하기
+- IP 별 트래픽의 합계 구하기
+```python
+with open("log.txt", "r") as f:
+    ipDict = {}
+
+    logs = f.readlines()
+    for log in logs:
+        # 공백을 기준으로 분할
+        data = log.split()
+        # 마지막 데이터를 정수로 변환해서 tot에 추가 - 예외가 발생하면 0을 추가
+        try:
+            # data[0]를 키로 해서 데이터가 존재하면 데이터에 없으면 0에 트래픽을 추가
+            # 예외가 발생하면 0을 더해줌
+            ipDict[data[0]] = ipDict.get(data[0], 0) + int(data[-1])
+        except:
+            ipDict[data[0]] = ipDict.get(data[0], 0) + 0
+    print(ipDict)
+```
