@@ -327,32 +327,3 @@ def cookieRead(request):
     nick = request.session.get("nick", "기본값")
     return HttpResponse(name + ":" + nick)
 ```
-
-## Django에서의 데이터베이스 연동
-### Model
-- 데이터 서비스를 제공하는 레이어
-- 애플리케이션안에 자동으로 생성되는 models.py 파일에 정의
-- 클래스 단위로 정의를 하는데 하나의 클래스는 하나의 테이블과 매팽됨
-- 모델 클래스를 만들때는 Model 이라는 클래스로부터 상속을 받아야 함
-- Primary Key를 설정하지 않으면 테이블을 생성할 때 자동으로 id가 생성됨
-- 속성을 생성하면 테이블의 컬럼이 만들어지는데 models에 있는 여러 종류의 클래스를 이용하고 각 클래스마다 생성을 할 때 여러 옵션을 설정하는 것이 가능
-- 대다수의 ORM은 테이블이 존재하지 않으면 테이블을 자동으로 생성해주고 제약 조건은 속성의 자료형에 해당하는 클래스에서 생성자나 메서드를 통해서 지정이 가능
-
-### mariadb나 mysql 사용을 위한 설정
-- mysqlclient라는 패키지가 필요
-- settings.py 파일의 DATABASE 설정 부분을 수정
-```python
-DATABASES = {
-  'default':{
-    'ENGINE':'django.db.backends.mysql',
-    'NAME':'데이터베이스이름',
-    'USER':'계정',
-    'PASSWORD':'비밀번호',
-    'HOST':'데이터베이스URL',
-    'PORT':'포트번호인데 기본 포트를 사용하는 경우 빈 칸으로 설정 가능'
-  }
-}
-```
-- 데이터베이스 정보를 수정한 경우는 2개의 명령어를 재실행
-- `python manage.py makemigrations`
-- `python manage.py migrate`
