@@ -443,4 +443,45 @@ export default App;
 ```
 - 데이터를 추가하면 목록 부분에 바로 반영이 됨
   - react는 명시적으로 화면을 재출력하지 않더라도 state나 props가 변경되면 화면을 재출력함
-### 연결
+## 연결
+### 클라이언트의 app.js 수정
+```jsx
+  constructor(props){
+    super(props)
+    // 데이터 배열 생성
+    this.state = {items:[]}
+  }
+
+// 컴포넌트가 메모리에 로드가 되면 호출되는 메서드
+componentDidMount() {
+  const requestoptions = {
+    method:"GET",
+    headers: {"Content-Type":"application/json"}
+  };
+  fetch("http://localhost/todo", requestoptions)
+  .then((response) => response.json())
+  .then((response) => {
+    this.setState({items:response.list})
+  },
+  (error) => {
+    console.log(error)
+  }
+)
+}
+```
+- 브라우저에서 콘솔의 메시지 확인
+`Access to fetch at 'http://localhost/todo' from origin 'http://localhost:3000' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.`
+- 웹 서버에서 CORS 설정을 하지 않아서 웹 클라이언트의 ajax나 fetch api로는 데이터를 가져오지 못해서 에러가 발생
+
+### django 프로젝트에서 CORS 설정을 추가해서 클라이언트에서 데이터를 가져갈 수 있도록 수정
+- 가상 환경에 패키지를 설치
+  - django-cors-headers
+- settings.py 파일을 수정
+  - INSTALLED_APP 부분에 추가 `'corsheaders'`
+  - MIDDLEWARE의 최상단에 추가 `'corsheaders.middleware.CorsMiddleware',`
+  - 허용한 URL을 설정
+  ```
+  CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://localhost:3000']
+  CORS_ALLOW_CREDENTIALS = True
+  ```
+
