@@ -2,8 +2,6 @@
 layout: wide
 sidebar:
   open: true
-cascade:
-  type: docs
 ---
 
 {{< cards >}}
