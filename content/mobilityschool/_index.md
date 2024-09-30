@@ -7,13 +7,4 @@ cascade:
 sidebar:
   open: true
 ---
-<!--
-## 2024/08/26 - 2025/02/26
-{{< cards >}}
-  {{< card link="/blog/mobilityschool/mariadb/" title="MariaDB" >}}
-  {{< card link="/blog/mobilityschool/mongodb/" title="MongoDB" >}}
-  {{< card link="/blog/mobilityschool/redis/" title="REDIS" >}}
-  {{< card link="/blog/mobilityschool/linux/" title="Linux" >}}
-
-{{< /cards >}}
--->
+2024/08/26 - 2025/02/26
