@@ -301,3 +301,10 @@ R2(config-std-nacl)#interface fa0/1
 R2(config-if)#ip access-group issuemaker in
 ```
 - R1라우터에서 192.170.0.1로 192.169.0.1과 192.168.0.1에서 ping을 전송
+- 192.168.0.1의 경우는 UUUUU가 보임
+- 192.169.0.1의 경우는 !!!!!가 보임
+
+```
+트래픽 차단
+R(ACL)---------Firewall(ACL보다 다양한 방식으로 차단)------Switch(VLAN)---------HOST(iptables)
+```
