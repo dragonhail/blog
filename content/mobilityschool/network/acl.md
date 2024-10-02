@@ -308,3 +308,4 @@ R2(config-if)#ip access-group issuemaker in
 트래픽 차단
 R(ACL)---------Firewall(ACL보다 다양한 방식으로 차단)------Switch(VLAN)---------HOST(iptables)
 ```
+
