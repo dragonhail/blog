@@ -766,4 +766,36 @@ class MessageProducer:
             future.get(timeout=2)
             return {"status_code": 200, "error": None}
         except Exception as exc:
+
+@api_view(['POST'])
+def bookAPI(request):
+    # 전송된 데이터 읽기
+    data = request.data
+    
+    # 숫자로 변환
+    data['pages'] = int(data['pages'])
+    data['price'] = int(data['price'])
+
+    # Model 형태로 변환
+    serializer = BookSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save() # 테이블에 저장
+
+        # 성공한 경우
+        broker = ["localhost:9092"]
+        topic = "cqrstopic"
+
+        # 프로듀서 생성
+        pd = MessageProducer(broker, topic)
+        
+        # 메시지 전송
+        msg = {"task":"insert", "data":serializer.data}
+        res = pd.send_message(msg)
+        print(res)
+
+        # 성공한 경우
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    # 실패한 경우
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 ```
